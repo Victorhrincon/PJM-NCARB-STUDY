@@ -27,8 +27,8 @@
 </head>
 <body>
 
-<h1>PjM Master Study</h1>
-<p class="subtitle">Complete NCARB Exam Simulation</p>
+<h1>PjM MASTER STUDY</h1>
+<p class="subtitle">Complete All Questions + AIA Contracts</p>
 
 <div class="sections" id="secMenu">
   <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
@@ -36,6 +36,7 @@
   <div class="sec-btn" onclick="showSec(3)">3. Contracts</div>
   <div class="sec-btn" onclick="showSec(4)">4. Execution</div>
   <div class="sec-btn" onclick="showSec(5)">5. Quality Control</div>
+  <div class="sec-btn" onclick="showSec(6)">6. Team/Claims/Ethics</div>
 </div>
 
 <div class="sub-tabs" id="conMenu">
@@ -50,31 +51,44 @@
 <script>
 const studyData = {
   1: [
-    {obj: "Obj 1.1", q: "An owner is assembling a team for the conceptual design of an eight-story, greenfield office building with underground parking. Which members are required? (Select 4)", a: "Architect, MEP Engineer, Structural Engineer, Geotechnical Engineer.", ex: "Geotech is critical for underground parking/foundation data. MEP/Structural are required for height/complexity."},
-    {obj: "Obj 1.1", q: "A university hires an architect for an IPD renovation of a 1905 facility. Which partners should be hired before schematic design? (Select 4)", a: "General Contractor, Geotechnical Engineer, Historical Preservationist, Construction Manager.", ex: "IPD requires GC/CM involvement in predesign. Historical experts are required for 1905 facades."},
-    {obj: "Obj 1.1", q: "An architect with in-house MEP services pursues a design-build refrigerated warehouse. Which partners must the firm contract? (Select 3)", a: "General Contractor, Refrigeration Consultant, Structural Engineer.", ex: "Cold-storage requires specialty refrigeration expertise above standard MEP. DB requires a GC partner."},
-    {obj: "Obj 1.2", q: "A firm has 1,400 billable hours and 2,000 total hours. What is the Utilization Rate?", a: "70%", ex: "Utilization Rate = (Direct Labor / Total Labor) x 100."},
-    {obj: "Obj 1.1", q: "Who should provide building design services in a standard assembly?", a: "Architect.", ex: "Primary responsibility for building design services."},
-    {obj: "Obj 1.1", q: "A project includes restoration of an original facade built in 1905. Who should the architect recommend for the predesign phase?", a: "Historical Preservationist.", ex: "Required for specific restoration expertise in early phases."},
-    {obj: "Obj 1.2", q: "Staffing levels are consistently high but project milestones are being missed. What should the PM evaluate first?", a: "Personnel, hours, and schedule alignment.", ex: "Requires tracking project progress based on personnel relative to the fees/schedule."},
-    {obj: "Obj 1.1", q: "A new performance hall addition requires an elevated walkway connection. Which engineer is required to inform foundation/site needs?", a: "Geotechnical Engineer.", ex: "Identifies below-grade conditions necessary for structural/civil site work."},
-    {obj: "Obj 1.1", q: "A refrigerated warehouse project has an aggressive schedule. Which team member is necessary for ground-up construction in a design-build team?", a: "Structural Engineer.", ex: "Required for building stability and ground-up design regardless of in-house MEP."},
-    {obj: "Obj 1.1", q: "Who provides consulting services given the structural requirements of an eight-story building?", a: "Structural Engineer.", ex: "Mandatory for height/safety compliance."}
+    {obj: "Obj 1.1", q: "Team for 8-story greenfield office with underground parking? (Select 4)", a: "Arch, MEP, Structural, Geotech.", ex: "Geotech is key for parking/foundation."},
+    {obj: "Obj 1.1", q: "IPD Renovation of 1905 facility? (Select 4)", a: "GC, Geotech, Historian, CM.", ex: "IPD requires GC/CM in predesign."},
+    {obj: "Obj 1.2", q: "Utilization Rate formula?", a: "Direct Labor / Total Labor", ex: "Measures billable efficiency."},
+    {obj: "Obj 1.1", q: "DB Refrigerated Warehouse? (Select 3)", a: "GC, Refrigeration Cons., Structural.", ex: "Cold storage needs specialty expertise."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "An architect sees workers without hard hats on a site visit. Correct response?", a: "Document in a memo to the contractor and copy the owner.", ex: "Inform the contractor; don't direct workers directly."}
+    {obj: "Obj 2.1", q: "Unsafe trenching/hard hats on site? Response?", a: "Memo to Contractor, copy Owner.", ex: "Architect informs but doesn't direct."},
+    {obj: "Obj 2.1", q: "Design error found internally? First step?", a: "Modify internal project work plan.", ex: "Define path forward before notifying owner."},
+    {obj: "Obj 2.2", q: "Parade timing constraint in Springfield? Contact?", a: "County Fair Board (Lindy Scralin).", ex: "Identify specific constituent associated with constraint."}
   ],
   3: {
-    'B101': [{obj: "Obj 3.1", q: "B101: Basic Services Phases?", a: "SD, DD, CD, Bidding, CA.", ex: "Standard 5 phases."}],
-    'A201': [{obj: "Obj 3.3", q: "Who can order work to stop?", a: "The Owner.", ex: "Architects only reject work."}],
-    'C401': [{obj: "Obj 3.2", q: "Consultant drawing accuracy responsibility?", a: "The Consultant.", ex: "They are the licensed professional for their scope."}],
-    'A101': [{obj: "Obj 3.3", q: "A101 Pricing?", a: "Stipulated Sum.", ex: "Fixed price."}]
+    'B101': [
+        {obj: "Obj 3.1", q: "5 Basic Services?", a: "SD, DD, CD, Bidding, CA.", ex: "Defined in Article 3."},
+        {obj: "Obj 3.1", q: "Copyright owner?", a: "The Architect.", ex: "Owner gets a license."}
+    ],
+    'A201': [
+        {obj: "Obj 3.3", q: "Who can stop work?", a: "Only the Owner.", ex: "Architect can reject work."},
+        {obj: "Obj 3.3", q: "Time to initiate claim?", a: "21 Days.", ex: "Required per A201."}
+    ],
+    'C401': [
+        {obj: "Obj 3.2", q: "Technical accuracy responsibility?", a: "The Consultant.", ex: "They are the licensed pro."}
+    ],
+    'A101': [
+        {obj: "Obj 3.3", q: "Payment structure?", a: "Stipulated Sum.", ex: "Fixed price agreement."}
+    ]
   },
   4: [
-    {obj: "Obj 4.1", q: "Estimate is 15% over budget in DD. First step?", a: "Evaluate estimate to identify material/scope changes.", ex: "Mitigate changes to align with owner's budget."}
+    {obj: "Obj 4.1", q: "Estimate 15% over budget in DD?", a: "Evaluate and mitigate scope/materials.", ex: "Goal is budget compliance."},
+    {obj: "Obj 4.4", q: "DRB rejects signage on permit set?", a: "Remove signage, submit separate permit.", ex: "Allows primary permit to proceed."}
   ],
   5: [
-    {obj: "Obj 5.1", q: "Architect in new jurisdiction. First step?", a: "Identify the Authorities Having Jurisdiction (AHJ).", ex: "Determines all required submittals/permits."}
+    {obj: "Obj 5.2", q: "Stakeholder engagement frequency? (Row D)", a: "Interview early, update at phase start.", ex: "Based on communication plan logic."},
+    {obj: "Obj 5.3", q: "Internal review timing (80% complete)?", a: "M2W1, M3W3, M8W1.", ex: "Based on 80% duration check."}
+  ],
+  6: [
+    {obj: "Claims", q: "IDM Default?", a: "The Architect.", ex: "Reviews claims before mediation."},
+    {obj: "Ethics", q: "Primary duty?", a: "Health, Safety, Welfare of Public.", ex: "Overrides duty to client."},
+    {obj: "Ethics", q: "Kickbacks allowed?", a: "No, unless disclosed/approved.", ex: "Avoid conflicts of interest."}
   ]
 };
 
@@ -114,6 +128,7 @@ showSec(1);
 </script>
 </body>
 </html>
+
 
 
 
