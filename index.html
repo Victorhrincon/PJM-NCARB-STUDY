@@ -28,7 +28,7 @@
 <body>
 
 <h1>PjM STUDY GUIDE</h1>
-<p class="subtitle">Select a section to begin testing your knowledge.</p>
+<p class="subtitle">NCARB Pattern-Based Study Tool</p>
 
 <div class="sections" id="secMenu">
   <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
@@ -50,32 +50,33 @@
 <script>
 const studyData = {
   1: [
-    {obj: "Obj 1.1", q: "A firm is awarded a library project on a site with significant elevation changes. Which consultant is hired first?", a: "Civil Engineer", ex: "Responsible for site grading and drainage early in the project."},
-    {obj: "Obj 1.2", q: "What is the Utilization Rate if billable hours are 1,400 out of 2,000 total hours?", a: "70%", ex: "Direct Hours divided by Total Labor Hours."}
+    {obj: "Obj 1.1", q: "A firm is awarded a project on a steep slope. Who is hired first?", a: "Civil Engineer", ex: "Handles site grading/drainage early on."},
+    {obj: "Obj 1.2", q: "Utilization Rate formula?", a: "Direct Hours / Total Hours", ex: "Measures billable efficiency."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "An architect observes unsafe trenching practices by a subcontractor during a site visit. How should the architect respond?", a: "Document the condition in a memo to the contractor and copy the owner.", ex: "The architect informs the contractor of safety observations but does not direct the workers directly."},
-    {obj: "Obj 2.1", q: "A PM discovers that a design error was made regarding occupancy classification. What is the very first step the architect should take?", a: "Take corrective actions to modify the internal project work plan.", ex: "Identify the root cause and define a path forward internally before notifying the owner."},
-    {obj: "Obj 2.2", q: "While reviewing meeting minutes for a public park project, the PM sees a task involving the timing of a local parade. With whom should the architect confirm this schedule item?", a: "The City Events Coordinator or Stakeholder associated with the parade.", ex: "Identify the specific team member or outside agency responsible for that specific schedule constraint."},
-    {obj: "Obj 2.1", q: "A project is falling behind schedule due to slow consultant delivery. What should the PM do first?", a: "Review the work plan and determine if tasks can be fast-tracked or re-sequenced.", ex: "Manage the internal schedule logic before requesting owner extensions."},
-    {obj: "Obj 2.3", q: "Which document should be used to formally record a decision made during a site meeting regarding a finish change?", a: "Meeting Minutes.", ex: "Minutes serve as the official historical record for all constituents throughout project delivery."},
-    {obj: "Obj 2.2", q: "A client requests a 2-week 'pause' for board approval. What is the PM's primary responsibility?", a: "Evaluate the impact on the Critical Path and update the project schedule.", ex: "Determine how outside factors impact milestones and task dependencies."},
-    {obj: "Obj 2.1", q: "The contractor requests to change a specified material to save time. What must the architect verify first?", a: "That the change maintains the design intent and complies with the work plan budget.", ex: "Administrative procedures must ensure the project remains on track without compromising quality."},
-    {obj: "Obj 2.2", q: "What is the benefit of a Gantt chart over a simple task list?", a: "It shows dependencies and the overlap of project tasks over time.", ex: "Allows the PM to prioritize tasks and balance the team's workload effectively."},
-    {obj: "Obj 2.3", q: "If a consultant is not receiving timely information from the owner, who is responsible for facilitating that communication?", a: "The Architect.", ex: "The architect must coordinate project team activities and communicate info to all constituents."},
-    {obj: "Obj 2.1", q: "An architect is behind on a deadline but the project budget is healthy. What is the best resource management move?", a: "Re-allocate internal staff from a project with a 'float' in its schedule.", ex: "Efficiently manage team member time to meet milestones without increasing fee burn."}
+    {obj: "Obj 2.1", q: "Architect sees workers without eye protection on site. Best response?", a: "Document in a memo to the contractor and copy the owner.", ex: "Architect informs the contractor but does not direct the workers directly."},
+    {obj: "Obj 2.1", q: "A major error is found in the partition types during CD phase. What to do first?", a: "Modify the internal project work plan.", ex: "Identify root cause and define a path forward internally before notifying the owner."}
   ],
   3: {
-    'B101': [{obj: "Obj 3.1", q: "What are the 5 Basic Services?", a: "SD, DD, CD, Bidding, and CA.", ex: "Any other service is 'Additional'."}],
-    'A201': [{obj: "Obj 3.3", q: "Who has the legal authority to stop the work?", a: "The Owner.", ex: "Architects can reject work but not order a stoppage."}],
-    'C401': [{obj: "Obj 3.2", q: "Who is responsible for consultant technical accuracy?", a: "The Consultant.", ex: "They are the licensed professional for their scope."}],
-    'A101': [{obj: "Obj 3.3", q: "What is the payment structure of an A101?", a: "Stipulated Sum.", ex: "Fixed-price contract."}]
+    'B101': [{obj: "Obj 3.1", q: "5 Basic Services?", a: "SD, DD, CD, Bidding, CA", ex: "Standard per B101 Article 3."}],
+    'A201': [{obj: "Obj 3.3", q: "Who can order work to stop?", a: "The Owner", ex: "Architects can only reject work."}],
+    'C401': [{obj: "Obj 3.2", q: "Who is responsible for consultant design errors?", a: "The Consultant", ex: "They are the licensed pro for their scope."}],
+    'A101': [{obj: "Obj 3.3", q: "A101 pricing type?", a: "Stipulated Sum", ex: "Fixed price agreement."}]
   },
   4: [
-    {obj: "Obj 4.2", q: "How should an Architect respond to scope creep?", a: "Analyze impact on fees and schedule immediately.", ex: "Document the change as an additional service if necessary."}
+    {obj: "Obj 4.1", q: "A contractor's estimate is 15% over the budget during DD. What is the architect's first step?", a: "Evaluate the estimate to identify changes in material or scope to align with the budget.", ex: "The architect must mitigate changes to comply with the construction budget."},
+    {obj: "Obj 4.2", q: "The owner asks for an extra meeting every week. How should the PM proceed?", a: "Analyze the impact on fees and schedules to determine if this is an Additional Service.", ex: "Changes in the frequency of communication impact project financing."},
+    {obj: "Obj 4.4", q: "A local Design Review Board rejects a specific exterior material. The owner wants the permit immediately. Best action?", a: "Remove the material from the permit set and submit it as a separate future submittal.", ex: "Allows permitting to proceed with the AHJ while the board discussion continues."},
+    {obj: "Obj 4.3", q: "Who is responsible for coordinating the close-out documentation for a project delivered via Design-Bid-Build?", a: "The Architect.", ex: "The architect must coordinate close-out and CA documentation."},
+    {obj: "Obj 4.4", q: "The PM is notified of a new zoning commission hearing regarding the project's height. Who must the architect bring to this meeting?", a: "The client and any consultants related to the height impact (e.g., Structural/Civil).", ex: "Architects must collaborate with project stakeholders to obtain AHJ approvals."},
+    {obj: "Obj 4.1", q: "During a renovation, unforeseen asbestos is found. What is the PM's first administrative duty?", a: "Evaluate the impact of the abatement on the construction budget and project financing.", ex: "Compliance with the construction budget requires constant evaluation of estimates against unforeseen conditions."},
+    {obj: "Obj 4.2", q: "The contractor identifies a conflict between structural and MEP drawings. What is the architect's first step?", a: "Review internal documentation to ensure it supports the specified delivery method.", ex: "Coordinate consultant documents to resolve conflicts before issuing instructions."},
+    {obj: "Obj 4.4", q: "Which agency is responsible for issuing the final Certificate of Occupancy?", a: "The Authority Having Jurisdiction (AHJ).", ex: "The building official/plan reviewer provides final project approval."},
+    {obj: "Obj 4.3", q: "A submittal for a custom fixture is rejected. What must the architect ensure the contractor does next?", a: "Resubmit a compliant version that follows the administrative procedures in the specs.", ex: "Ensures the management of project execution remains in compliance with documentation."},
+    {obj: "Obj 4.1", q: "When evaluating a construction estimate, what should the architect compare it against to ensure accuracy?", a: "Market rates, previous project data, and the owner's budget for the work.", ex: "Constant monitoring of budget compliance is required per Objective 4.1."}
   ],
   5: [
-    {obj: "Obj 5.2", q: "Which process is 'product-oriented'?", a: "Quality Control (QC)", ex: "QA is the process; QC is the final check of the drawings."}
+    {obj: "Obj 5.2", q: "Internal reviews occur after each phase is 80% complete. In a 12-month schedule with 3-month phases, when is the first review?", a: "Month 2, Week 4 / Month 3, Week 1", ex: "Based on 80% completion of the first phase duration."}
   ]
 };
 
@@ -115,6 +116,7 @@ showSec(1);
 </script>
 </body>
 </html>
+
 
 
 
