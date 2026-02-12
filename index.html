@@ -3,26 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCARB PjM Master Study Tool</title>
+<title>NCARB PjM Study Guide - FULL VAULT</title>
 <style>
   :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
   body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
   h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; font-size: 1.6rem; }
   .subtitle { margin-bottom: 30px; color: #636e72; font-size: 0.9rem; }
-  
   .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 900px; width: 100%; margin-bottom: 20px; }
   .sec-btn { padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; text-align: center; font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
   .sec-btn:hover { border-color: var(--accent); color: var(--accent); }
   .sec-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
   .sub-tabs { display: none; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 30px; }
   .sub-btn { padding: 8px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.75rem; text-align: center; cursor: pointer; color: #636e72; background: white; transition: 0.2s; }
   .sub-btn.active { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-
   .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
   .card { background: var(--card-bg); border-radius: 8px; padding: 30px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s; text-align: center; position: relative; }
   .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
-  
   .obj-tag { position: absolute; top: 15px; left: 15px; font-size: 0.65rem; color: #aaa; text-transform: uppercase; font-weight: bold; }
   .q-text { font-size: 1rem; line-height: 1.5; color: var(--primary); }
   .a-text { font-weight: 600; color: var(--accent); line-height: 1.5; font-size: 1.1rem; }
@@ -31,8 +27,8 @@
 </head>
 <body>
 
-<h1>PjM MASTER STUDY</h1>
-<p class="subtitle">Complete Recovery Version: All Questions + AIA Contracts</p>
+<h1>PjM STUDY GUIDE</h1>
+<p class="subtitle">Full Vault - 50 Questions Merged</p>
 
 <div class="sections" id="secMenu">
   <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
@@ -54,43 +50,71 @@
 <script>
 const studyData = {
   1: [
-    {obj: "Obj 1.1", q: "Team for 8-story greenfield office with underground parking? (Select 4)", a: "Arch, MEP, Structural, Geotech.", ex: "Geotech is key for foundation data."},
-    {obj: "Obj 1.1", q: "IPD Renovation of 1905 facility? (Select 4)", a: "GC, Geotech, Historian, CM.", ex: "IPD requires GC/CM in predesign."},
-    {obj: "Obj 1.1", q: "DB Refrigerated Warehouse? (Select 3)", a: "GC, Refrigeration Cons., Structural.", ex: "Specialty cold-storage expertise required."},
-    {obj: "Obj 1.2", q: "What is the Utilization Rate if billable hours are 1,400 out of 2,000?", a: "70%", ex: "Direct Hours / Total Hours."},
-    {obj: "Obj 1.1", q: "Staffing strategy for first hospital project?", a: "Balanced/Matrix Staffing.", ex: "Mixes senior oversight with junior production."}
+    {obj: "Obj 1.1", q: "Owner is assembling a team for an 8-story greenfield office. Which members are required? (Select 4)", a: "Architect, MEP, Structural, Geotechnical.", ex: "Geotech is critical for foundation/site data."},
+    {obj: "Obj 1.1", q: "IPD renovation of a 1905 facility. Who to hire before SD? (Select 4)", a: "GC, Geotechnical, Historical Preservationist, CM.", ex: "IPD involves GC/CM early; 1905 facade needs historical expertise."},
+    {obj: "Obj 1.1", q: "DB Refrigerated Warehouse project. Which consultants must be hired? (Select 3)", a: "GC, Refrigeration Consultant, Structural.", ex: "DB needs a contractor; refrigeration is specialty expertise."},
+    {obj: "Obj 1.2", q: "Direct hours = 1,400. Total hours = 2,000. Utilization Rate?", a: "70%", ex: "1,400 / 2,000 = 0.70."},
+    {obj: "Obj 1.1", q: "Staffing strategy for first hospital project to ensure quality?", a: "Balanced/Matrix Staffing.", ex: "Mixes senior oversight with junior production."},
+    {obj: "Obj 1.2", q: "Project Labor > Earned Value. First step?", a: "Assess staffing levels relative to fees.", ex: "Determine why resources are burned faster than work is done."},
+    {obj: "Obj 1.1", q: "Specialized lighting designer fee category?", a: "Direct/Reimbursable Expense.", ex: "Based on contract service definitions."},
+    {obj: "Obj 1.2", q: "Principal spends 90% time on marketing. Impact?", a: "Lowers firm's overall Utilization Rate.", ex: "Marketing is indirect labor."},
+    {obj: "Obj 1.1", q: "Who provides building design services in conceptual phase?", a: "Architect.", ex: "Primary role for design."},
+    {obj: "Obj 1.1", q: "Who identifies below-grade conditions?", a: "Geotechnical Engineer.", ex: "Critical for foundations."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "Architect sees workers without hard hats on site visit. Response?", a: "Memo to Contractor, copy Owner.", ex: "Architect informs but does not direct workers."},
-    {obj: "Obj 2.1", q: "Design error found internally regarding occupancy? First step?", a: "Take corrective actions to modify project work plan.", ex: "Define path forward before talking to owner."},
-    {obj: "Obj 2.2", q: "Parade timing constraint in Springfield? Contact?", a: "Lindy Scralin (County Fair Board).", ex: "The constituent associated with the constraint."},
-    {obj: "Obj 2.1", q: "Primary purpose of a WBS?", a: "Divide project into manageable work packages.", ex: "Essential for scheduling and fee allocation."}
+    {obj: "Obj 2.1", q: "Unsafe trenching/hard hats observed. Architect response?", a: "Memo to Contractor, copy Owner.", ex: "Architect informs but doesn't direct workers."},
+    {obj: "Obj 2.1", q: "Design error found internally. First step?", a: "Modify internal project work plan.", ex: "Fix root cause internally before notifying owner."},
+    {obj: "Obj 2.2", q: "Confirming parade timing constraint? Contact?", a: "Lindy Scralin (County Fair Board).", ex: "Identify constituent associated with constraint."},
+    {obj: "Obj 2.1", q: "Primary purpose of a WBS?", a: "Divide project into manageable work packages.", ex: "Essential for scheduling and fees."},
+    {obj: "Obj 2.2", q: "CPM scheduling benefit?", a: "Identifies tasks that determine project duration.", ex: "Shows zero float tasks."},
+    {obj: "Obj 2.3", q: "Document for formal finish change decision?", a: "Meeting Minutes.", ex: "Serves as historical record."},
+    {obj: "Obj 2.2", q: "Client requests 2-week 'pause'. PM duty?", a: "Evaluate impact on Critical Path.", ex: "Determine how outside factors hit milestones."},
+    {obj: "Obj 2.1", q: "Contractor wants material change to save time. Verify first?", a: "Design intent and budget compliance.", ex: "Maintain quality standards."},
+    {obj: "Obj 2.3", q: "Consultant isn't getting owner info. Facilitator?", a: "The Architect.", ex: "Architect coordinates all constituents."},
+    {obj: "Obj 2.1", q: "Behind schedule but budget is healthy. Resource move?", a: "Re-allocate staff from projects with 'float'.", ex: "Manage time to meet milestones."}
   ],
   3: {
     'B101': [
-      {obj: "Obj 3.1", q: "What are the 5 Basic Services in AIA B101?", a: "SD, DD, CD, Bidding, and CA.", ex: "Defined in Article 3."},
-      {obj: "Obj 3.1", q: "Who owns the copyright to the Instruments of Service?", a: "The Architect.", ex: "Owner is granted a license to use them."}
+      {obj: "Obj 3.1", q: "5 Basic Services?", a: "SD, DD, CD, Bidding, CA.", ex: "Defined in Article 3."},
+      {obj: "Obj 3.4", q: "Impact of Owner's consultants?", a: "Sequencing and coordination required.", ex: "Integrate work into overall project."},
+      {obj: "Obj 3.1", q: "Copyright owner?", a: "The Architect.", ex: "Owner receives license."}
     ],
     'A201': [
-      {obj: "Obj 3.3", q: "Under A201, who has the legal authority to stop the work?", a: "The Owner.", ex: "Architect can reject work, but cannot order stoppage."},
-      {obj: "Obj 3.3", q: "Claim notification period after an occurrence?", a: "21 days.", ex: "Standard notification time in A201."}
+      {obj: "Obj 3.3", q: "Who can stop the work?", a: "Only the Owner.", ex: "Architect rejects work; Owner stops it."},
+      {obj: "Obj 3.3", q: "Default IDM?", a: "The Architect.", ex: "Reviews claims before mediation."},
+      {obj: "Obj 3.3", q: "Contractor finds site error. Claim time?", a: "21 Days.", ex: "Standard A201 notification window."}
     ],
     'C401': [
-      {obj: "Obj 3.2", q: "Responsibility for consultant's technical accuracy?", a: "The Consultant.", ex: "Architect coordinates; Consultant is the licensed pro."}
+      {obj: "Obj 3.2", q: "Technical accuracy of consultant design?", a: "The Consultant.", ex: "Architect coordinates; Consultant is pro."},
+      {obj: "Obj 3.2", q: "Pay consultant if Owner hasn't paid Arch?", a: "Yes, typically.", ex: "C401 best efforts/payment timing."}
     ],
     'A101': [
-      {obj: "Obj 3.3", q: "Payment structure of A101 agreement?", a: "Stipulated Sum.", ex: "A fixed-price contract."}
+      {obj: "Obj 3.3", q: "A101 pricing structure?", a: "Stipulated Sum.", ex: "Fixed-price agreement."}
     ]
   },
   4: [
-    {obj: "Obj 4.1", q: "Estimate is 15% over budget in DD phase. First step?", a: "Evaluate estimate to identify scope/material changes.", ex: "Mitigate changes to align with budget."},
-    {obj: "Obj 4.4", q: "DRB rejects signage on permit set. Best action?", a: "Remove signage from permit set and submit separately.", ex: "Allows primary building permit to proceed."},
-    {obj: "Obj 4.2", q: "How to respond to 'Scope Creep'?", a: "Analyze impact on fees and schedule immediately.", ex: "Prevents uncompensated labor."}
+    {obj: "Obj 4.1", q: "Estimate 15% over budget in DD. First step?", a: "Evaluate estimate to mitigate scope/materials.", ex: "Align with owner budget."},
+    {obj: "Obj 4.2", q: "Owner wants weekly extra meeting. PM action?", a: "Analyze impact on fees/schedule.", ex: "Determine if this is Additional Service."},
+    {obj: "Obj 4.4", q: "DRB rejects signage on permit set. Best action?", a: "Remove signage from set, submit separately.", ex: "Allows primary permit to proceed."},
+    {obj: "Obj 4.3", q: "Responsible for DBB close-out docs?", a: "The Architect.", ex: "Coordinates CA and close-out."},
+    {obj: "Obj 4.1", q: "Compare construction estimate against what?", a: "Market rates, history, and owner budget.", ex: "Ensure constant budget monitoring."},
+    {obj: "Obj 4.2", q: "Unforeseen asbestos found. PM first duty?", a: "Evaluate impact on budget and financing.", ex: "Constant monitoring of project execution."},
+    {obj: "Obj 4.3", q: "Conflict between Structural/MEP found by GC. First step?", a: "Review internal docs for delivery method support.", ex: "Coordinate docs before instruction."},
+    {obj: "Obj 4.4", q: "Agency issuing Certificate of Occupancy?", a: "The AHJ.", ex: "Building official provides final approval."},
+    {obj: "Obj 4.1", q: "Contractor resubmitting rejected custom fixture?", a: "Ensure resubmittal follows administrative procedures.", ex: "Management of project execution."},
+    {obj: "Obj 4.4", q: "New zoning hearing for project height. Bring who?", a: "Client and height-related consultants.", ex: "Collaborate for AHJ approvals."}
   ],
   5: [
-    {obj: "Obj 5.2", q: "Internal review timing based on 80% completion? (Check 4)", a: "M2W1, M3W3, M6W3, M8W1.", ex: "Calculated based on quality control schedule."},
-    {obj: "Obj 5.3", q: "Stakeholder engagement row showing interviews early + updates at phase start?", a: "Row D.", ex: "Shows frequency of engagement."},
-    {obj: "Obj 5.1", q: "Architect in new jurisdiction. First step?", a: "Identify AHJs and determine submittal requirements.", ex: "Critical for jurisdictional approvals."}
+    {obj: "Obj 5.1", q: "Architect in new jurisdiction. First step?", a: "Identify AHJs and submittal requirements.", ex: "Understanding permits throughout project."},
+    {obj: "Obj 5.2", q: "Insurance for technical error claim?", a: "Professional Liability (E&O).", ex: "Covers negligence in documentation."},
+    {obj: "Obj 5.3", q: "Structural columns conflict with architect hallway. Action?", a: "Notify Structural and coordinate internally.", ex: "Architect responsible for coordinating consultants."},
+    {obj: "Obj 5.2", q: "Policy where every set is reviewed by a principal?", a: "Peer Review / Quality Control.", ex: "Specific review process to evaluate quality."},
+    {obj: "Obj 5.1", q: "Building exceeds zoning height. First step?", a: "Identify design impact and determine variance need.", ex: "Impact of zoning on design is critical."},
+    {obj: "Obj 5.4", q: "Cheaper glazing system doesn't meet thermal goals. Management?", a: "Collaborate to maintain design integrity.", ex: "Monitor design objectives across phases."},
+    {obj: "Obj 5.2", q: "Primary goal of 'Standard of Care'?", a: "Same level of skill as other pros in same locality.", ex: "Benchmark for reducing liability."},
+    {obj: "Obj 5.3", q: "MEP using outdated architectural backgrounds. Failure in?", a: "Consultant Coordination.", ex: "Regular collaboration is essential."},
+    {obj: "Obj 5.2", q: "Internal review timing (80% complete)? (Check 4)", a: "M2W1, M3W3, M6W3, M8W1.", ex: "Calculated based on quality schedule."},
+    {obj: "Obj 5.3", q: "Stakeholder engagement frequency? (Row D)", a: "Interview early, update at phase start.", ex: "Based on communication plan logic."}
   ]
 };
 
