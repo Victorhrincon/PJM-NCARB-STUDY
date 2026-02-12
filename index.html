@@ -5,29 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCARB PjM Study Guide</title>
 <style>
-  /* Restoring the Minimalist Aesthetic */
   :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
   body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-  
   h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; font-size: 1.6rem; }
   .subtitle { margin-bottom: 30px; color: #636e72; font-size: 0.9rem; }
-
-  /* Section Tabs - Light & Minimalist */
   .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 900px; width: 100%; margin-bottom: 20px; }
   .sec-btn { padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; text-align: center; font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
   .sec-btn:hover { border-color: var(--accent); color: var(--accent); }
   .sec-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-  /* Sub-tabs for Contracts - Light Pill Style */
   .sub-tabs { display: none; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 30px; }
   .sub-btn { padding: 8px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.75rem; text-align: center; cursor: pointer; color: #636e72; background: white; transition: 0.2s; }
   .sub-btn.active { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-
-  /* Flashcards - Restoring Original Spacing/Lightness */
   .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
   .card { background: var(--card-bg); border-radius: 8px; padding: 30px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s; text-align: center; position: relative; }
   .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
-  
   .obj-tag { position: absolute; top: 15px; left: 15px; font-size: 0.65rem; color: #aaa; text-transform: uppercase; font-weight: bold; }
   .q-text { font-size: 1rem; line-height: 1.5; color: var(--primary); }
   .a-text { font-weight: 600; color: var(--accent); line-height: 1.5; font-size: 1.1rem; }
@@ -60,36 +51,31 @@
 const studyData = {
   1: [
     {obj: "Obj 1.1", q: "A firm is awarded a library project on a site with significant elevation changes. Which consultant is hired first?", a: "Civil Engineer", ex: "Responsible for site grading and drainage early in the project."},
-    {obj: "Obj 1.2", q: "What is the Utilization Rate if billable hours are 1,400 out of 2,000 total hours?", a: "70%", ex: "Direct Hours divided by Total Labor Hours."},
-    {obj: "Obj 1.1", q: "Who identifies necessary below-grade conditions like soil bearing capacity?", a: "Geotechnical Engineer", ex: "Required for the structural foundation design."}
+    {obj: "Obj 1.2", q: "What is the Utilization Rate if billable hours are 1,400 out of 2,000 total hours?", a: "70%", ex: "Direct Hours divided by Total Labor Hours."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "What is the primary purpose of a Work Breakdown Structure (WBS)?", a: "Divide project into manageable work packages.", ex: "Essential for scheduling and fee allocation."},
-    {obj: "Obj 2.1", q: "Which method determines the sequence of tasks that defines the project duration?", a: "Critical Path Method (CPM)", ex: "Tasks on the critical path have zero float."}
+    {obj: "Obj 2.1", q: "An architect observes unsafe trenching practices by a subcontractor during a site visit. How should the architect respond?", a: "Document the condition in a memo to the contractor and copy the owner.", ex: "The architect informs the contractor of safety observations but does not direct the workers directly."},
+    {obj: "Obj 2.1", q: "A PM discovers that a design error was made regarding occupancy classification. What is the very first step the architect should take?", a: "Take corrective actions to modify the internal project work plan.", ex: "Identify the root cause and define a path forward internally before notifying the owner."},
+    {obj: "Obj 2.2", q: "While reviewing meeting minutes for a public park project, the PM sees a task involving the timing of a local parade. With whom should the architect confirm this schedule item?", a: "The City Events Coordinator or Stakeholder associated with the parade.", ex: "Identify the specific team member or outside agency responsible for that specific schedule constraint."},
+    {obj: "Obj 2.1", q: "A project is falling behind schedule due to slow consultant delivery. What should the PM do first?", a: "Review the work plan and determine if tasks can be fast-tracked or re-sequenced.", ex: "Manage the internal schedule logic before requesting owner extensions."},
+    {obj: "Obj 2.3", q: "Which document should be used to formally record a decision made during a site meeting regarding a finish change?", a: "Meeting Minutes.", ex: "Minutes serve as the official historical record for all constituents throughout project delivery."},
+    {obj: "Obj 2.2", q: "A client requests a 2-week 'pause' for board approval. What is the PM's primary responsibility?", a: "Evaluate the impact on the Critical Path and update the project schedule.", ex: "Determine how outside factors impact milestones and task dependencies."},
+    {obj: "Obj 2.1", q: "The contractor requests to change a specified material to save time. What must the architect verify first?", a: "That the change maintains the design intent and complies with the work plan budget.", ex: "Administrative procedures must ensure the project remains on track without compromising quality."},
+    {obj: "Obj 2.2", q: "What is the benefit of a Gantt chart over a simple task list?", a: "It shows dependencies and the overlap of project tasks over time.", ex: "Allows the PM to prioritize tasks and balance the team's workload effectively."},
+    {obj: "Obj 2.3", q: "If a consultant is not receiving timely information from the owner, who is responsible for facilitating that communication?", a: "The Architect.", ex: "The architect must coordinate project team activities and communicate info to all constituents."},
+    {obj: "Obj 2.1", q: "An architect is behind on a deadline but the project budget is healthy. What is the best resource management move?", a: "Re-allocate internal staff from a project with a 'float' in its schedule.", ex: "Efficiently manage team member time to meet milestones without increasing fee burn."}
   ],
   3: {
-    'B101': [
-      {obj: "Obj 3.1", q: "What are the 5 Basic Services in AIA B101?", a: "SD, DD, CD, Bidding, and CA.", ex: "Any other service is 'Additional' and requires extra compensation."},
-      {obj: "Obj 3.1", q: "Who owns the copyright to the Instruments of Service?", a: "The Architect.", ex: "The Owner is granted a license to use them for the project."}
-    ],
-    'A201': [
-      {obj: "Obj 3.3", q: "Under A201, who has the legal authority to stop the work?", a: "The Owner.", ex: "The Architect can reject work, but cannot order the Contractor to stop."},
-      {obj: "Obj 3.3", q: "How long does a party have to initiate a claim after an occurrence?", a: "21 days.", ex: "Required per A201 to allow for investigation."}
-    ],
-    'C401': [
-      {obj: "Obj 3.2", q: "Who is responsible for the technical accuracy of a consultant's design?", a: "The Consultant.", ex: "The Architect coordinates, but the Consultant is the licensed professional for their scope."}
-    ],
-    'A101': [
-      {obj: "Obj 3.3", q: "What is the payment structure of an A101 agreement?", a: "Stipulated Sum.", ex: "A fixed-price contract between Owner and Contractor."}
-    ]
+    'B101': [{obj: "Obj 3.1", q: "What are the 5 Basic Services?", a: "SD, DD, CD, Bidding, and CA.", ex: "Any other service is 'Additional'."}],
+    'A201': [{obj: "Obj 3.3", q: "Who has the legal authority to stop the work?", a: "The Owner.", ex: "Architects can reject work but not order a stoppage."}],
+    'C401': [{obj: "Obj 3.2", q: "Who is responsible for consultant technical accuracy?", a: "The Consultant.", ex: "They are the licensed professional for their scope."}],
+    'A101': [{obj: "Obj 3.3", q: "What is the payment structure of an A101?", a: "Stipulated Sum.", ex: "Fixed-price contract."}]
   },
   4: [
-    {obj: "Obj 4.2", q: "How should an Architect respond to changes in scope to protect the firm?", a: "Analyze impact on fees and schedule immediately.", ex: "Prevents 'Scope Creep' and uncompensated labor."},
-    {obj: "Obj 4.3", q: "What defines 'Substantial Completion'?", a: "The project can be occupied for its intended use.", ex: "This milestone starts the warranty period."}
+    {obj: "Obj 4.2", q: "How should an Architect respond to scope creep?", a: "Analyze impact on fees and schedule immediately.", ex: "Document the change as an additional service if necessary."}
   ],
   5: [
-    {obj: "Obj 5.2", q: "Which process is 'product-oriented' and occurs at the end of a phase?", a: "Quality Control (QC)", ex: "Checking the final drawings; Quality Assurance (QA) is the process used during the work."},
-    {obj: "Obj 5.3", q: "What is the benefit of using BIM for Quality Control?", a: "Automated Clash Detection.", ex: "Reduces field errors by finding engineering conflicts in the model."}
+    {obj: "Obj 5.2", q: "Which process is 'product-oriented'?", a: "Quality Control (QC)", ex: "QA is the process; QC is the final check of the drawings."}
   ]
 };
 
@@ -129,5 +115,6 @@ showSec(1);
 </script>
 </body>
 </html>
+
 
 
