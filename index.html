@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCARB PjM Study Guide</title>
+<title>NCARB PjM Master Study Tool</title>
 <style>
   :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
   body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
@@ -27,8 +27,8 @@
 </head>
 <body>
 
-<h1>PjM STUDY GUIDE</h1>
-<p class="subtitle">NCARB Pattern-Based Study Tool</p>
+<h1>PjM Master Study</h1>
+<p class="subtitle">Complete NCARB Exam Simulation</p>
 
 <div class="sections" id="secMenu">
   <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
@@ -50,33 +50,31 @@
 <script>
 const studyData = {
   1: [
-    {obj: "Obj 1.1", q: "A firm is awarded a project on a steep slope. Who is hired first?", a: "Civil Engineer", ex: "Handles site grading/drainage early on."},
-    {obj: "Obj 1.2", q: "Utilization Rate formula?", a: "Direct Hours / Total Hours", ex: "Measures billable efficiency."}
+    {obj: "Obj 1.1", q: "An owner is assembling a team for the conceptual design of an eight-story, greenfield office building with underground parking. Which members are required? (Select 4)", a: "Architect, MEP Engineer, Structural Engineer, Geotechnical Engineer.", ex: "Geotech is critical for underground parking/foundation data. MEP/Structural are required for height/complexity."},
+    {obj: "Obj 1.1", q: "A university hires an architect for an IPD renovation of a 1905 facility. Which partners should be hired before schematic design? (Select 4)", a: "General Contractor, Geotechnical Engineer, Historical Preservationist, Construction Manager.", ex: "IPD requires GC/CM involvement in predesign. Historical experts are required for 1905 facades."},
+    {obj: "Obj 1.1", q: "An architect with in-house MEP services pursues a design-build refrigerated warehouse. Which partners must the firm contract? (Select 3)", a: "General Contractor, Refrigeration Consultant, Structural Engineer.", ex: "Cold-storage requires specialty refrigeration expertise above standard MEP. DB requires a GC partner."},
+    {obj: "Obj 1.2", q: "A firm has 1,400 billable hours and 2,000 total hours. What is the Utilization Rate?", a: "70%", ex: "Utilization Rate = (Direct Labor / Total Labor) x 100."},
+    {obj: "Obj 1.1", q: "Who should provide building design services in a standard assembly?", a: "Architect.", ex: "Primary responsibility for building design services."},
+    {obj: "Obj 1.1", q: "A project includes restoration of an original facade built in 1905. Who should the architect recommend for the predesign phase?", a: "Historical Preservationist.", ex: "Required for specific restoration expertise in early phases."},
+    {obj: "Obj 1.2", q: "Staffing levels are consistently high but project milestones are being missed. What should the PM evaluate first?", a: "Personnel, hours, and schedule alignment.", ex: "Requires tracking project progress based on personnel relative to the fees/schedule."},
+    {obj: "Obj 1.1", q: "A new performance hall addition requires an elevated walkway connection. Which engineer is required to inform foundation/site needs?", a: "Geotechnical Engineer.", ex: "Identifies below-grade conditions necessary for structural/civil site work."},
+    {obj: "Obj 1.1", q: "A refrigerated warehouse project has an aggressive schedule. Which team member is necessary for ground-up construction in a design-build team?", a: "Structural Engineer.", ex: "Required for building stability and ground-up design regardless of in-house MEP."},
+    {obj: "Obj 1.1", q: "Who provides consulting services given the structural requirements of an eight-story building?", a: "Structural Engineer.", ex: "Mandatory for height/safety compliance."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "Architect sees workers without eye protection on site. Best response?", a: "Document in a memo to the contractor and copy the owner.", ex: "Architect informs the contractor but does not direct the workers directly."},
-    {obj: "Obj 2.1", q: "A major error is found in the partition types during CD phase. What to do first?", a: "Modify the internal project work plan.", ex: "Identify root cause and define a path forward internally before notifying the owner."}
+    {obj: "Obj 2.1", q: "An architect sees workers without hard hats on a site visit. Correct response?", a: "Document in a memo to the contractor and copy the owner.", ex: "Inform the contractor; don't direct workers directly."}
   ],
   3: {
-    'B101': [{obj: "Obj 3.1", q: "5 Basic Services?", a: "SD, DD, CD, Bidding, CA", ex: "Standard per B101 Article 3."}],
-    'A201': [{obj: "Obj 3.3", q: "Who can order work to stop?", a: "The Owner", ex: "Architects can only reject work."}],
-    'C401': [{obj: "Obj 3.2", q: "Who is responsible for consultant design errors?", a: "The Consultant", ex: "They are the licensed pro for their scope."}],
-    'A101': [{obj: "Obj 3.3", q: "A101 pricing type?", a: "Stipulated Sum", ex: "Fixed price agreement."}]
+    'B101': [{obj: "Obj 3.1", q: "B101: Basic Services Phases?", a: "SD, DD, CD, Bidding, CA.", ex: "Standard 5 phases."}],
+    'A201': [{obj: "Obj 3.3", q: "Who can order work to stop?", a: "The Owner.", ex: "Architects only reject work."}],
+    'C401': [{obj: "Obj 3.2", q: "Consultant drawing accuracy responsibility?", a: "The Consultant.", ex: "They are the licensed professional for their scope."}],
+    'A101': [{obj: "Obj 3.3", q: "A101 Pricing?", a: "Stipulated Sum.", ex: "Fixed price."}]
   },
   4: [
-    {obj: "Obj 4.1", q: "A contractor's estimate is 15% over the budget during DD. What is the architect's first step?", a: "Evaluate the estimate to identify changes in material or scope to align with the budget.", ex: "The architect must mitigate changes to comply with the construction budget."},
-    {obj: "Obj 4.2", q: "The owner asks for an extra meeting every week. How should the PM proceed?", a: "Analyze the impact on fees and schedules to determine if this is an Additional Service.", ex: "Changes in the frequency of communication impact project financing."},
-    {obj: "Obj 4.4", q: "A local Design Review Board rejects a specific exterior material. The owner wants the permit immediately. Best action?", a: "Remove the material from the permit set and submit it as a separate future submittal.", ex: "Allows permitting to proceed with the AHJ while the board discussion continues."},
-    {obj: "Obj 4.3", q: "Who is responsible for coordinating the close-out documentation for a project delivered via Design-Bid-Build?", a: "The Architect.", ex: "The architect must coordinate close-out and CA documentation."},
-    {obj: "Obj 4.4", q: "The PM is notified of a new zoning commission hearing regarding the project's height. Who must the architect bring to this meeting?", a: "The client and any consultants related to the height impact (e.g., Structural/Civil).", ex: "Architects must collaborate with project stakeholders to obtain AHJ approvals."},
-    {obj: "Obj 4.1", q: "During a renovation, unforeseen asbestos is found. What is the PM's first administrative duty?", a: "Evaluate the impact of the abatement on the construction budget and project financing.", ex: "Compliance with the construction budget requires constant evaluation of estimates against unforeseen conditions."},
-    {obj: "Obj 4.2", q: "The contractor identifies a conflict between structural and MEP drawings. What is the architect's first step?", a: "Review internal documentation to ensure it supports the specified delivery method.", ex: "Coordinate consultant documents to resolve conflicts before issuing instructions."},
-    {obj: "Obj 4.4", q: "Which agency is responsible for issuing the final Certificate of Occupancy?", a: "The Authority Having Jurisdiction (AHJ).", ex: "The building official/plan reviewer provides final project approval."},
-    {obj: "Obj 4.3", q: "A submittal for a custom fixture is rejected. What must the architect ensure the contractor does next?", a: "Resubmit a compliant version that follows the administrative procedures in the specs.", ex: "Ensures the management of project execution remains in compliance with documentation."},
-    {obj: "Obj 4.1", q: "When evaluating a construction estimate, what should the architect compare it against to ensure accuracy?", a: "Market rates, previous project data, and the owner's budget for the work.", ex: "Constant monitoring of budget compliance is required per Objective 4.1."}
+    {obj: "Obj 4.1", q: "Estimate is 15% over budget in DD. First step?", a: "Evaluate estimate to identify material/scope changes.", ex: "Mitigate changes to align with owner's budget."}
   ],
   5: [
-    {obj: "Obj 5.2", q: "Internal reviews occur after each phase is 80% complete. In a 12-month schedule with 3-month phases, when is the first review?", a: "Month 2, Week 4 / Month 3, Week 1", ex: "Based on 80% completion of the first phase duration."}
+    {obj: "Obj 5.1", q: "Architect in new jurisdiction. First step?", a: "Identify the Authorities Having Jurisdiction (AHJ).", ex: "Determines all required submittals/permits."}
   ]
 };
 
@@ -116,6 +114,7 @@ showSec(1);
 </script>
 </body>
 </html>
+
 
 
 
