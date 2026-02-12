@@ -3,39 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCARB PjM Master Study Tool</title>
+<title>NCARB PjM Study Guide</title>
 <style>
-  :root { --primary: #2d3436; --accent: #0984e3; --success: #00b894; --bg: #f4f7f6; --card-bg: #ffffff; }
-  body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-  h1 { font-size: 1.4rem; color: #2d3436; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-  p.subtitle { font-size: 0.8rem; color: #636e72; margin-bottom: 20px; }
+  /* Restoring the Minimalist Aesthetic */
+  :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
+  body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
   
-  /* Main Section Tabs */
-  .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 15px; }
-  .sec-btn { padding: 12px 5px; border: 1px solid #dfe6e9; border-radius: 6px; background: white; cursor: pointer; font-size: 0.75rem; font-weight: bold; text-align: center; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-  .sec-btn.active { background: var(--success); color: white; border-color: var(--success); }
+  h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; font-size: 1.6rem; }
+  .subtitle { margin-bottom: 30px; color: #636e72; font-size: 0.9rem; }
 
-  /* Contract Sub-Tabs */
-  .sub-tabs { display: none; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; max-width: 800px; margin-bottom: 15px; animation: fadeIn 0.3s; }
-  .sub-btn { padding: 10px; border: 1.5px solid var(--success); border-radius: 25px; background: white; color: var(--success); cursor: pointer; font-size: 0.7rem; font-weight: bold; text-align: center; }
-  .sub-btn.active { background: var(--success); color: white; }
+  /* Section Tabs - Light & Minimalist */
+  .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 900px; width: 100%; margin-bottom: 20px; }
+  .sec-btn { padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; text-align: center; font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
+  .sec-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .sec-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-  /* Flashcards */
-  .card-container { display: grid; grid-template-columns: 1fr; gap: 15px; width: 100%; max-width: 600px; margin-top: 10px; }
-  .card { background: var(--card-bg); border-radius: 12px; padding: 30px; min-height: 160px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; transition: transform 0.2s; }
-  .card:active { transform: scale(0.98); }
-  .q-text { font-size: 1.1rem; color: #2d3436; line-height: 1.5; }
-  .a-text { font-size: 1.1rem; font-weight: bold; color: var(--success); margin-bottom: 12px; }
-  .ex-text { font-size: 0.9rem; color: #636e72; font-style: italic; border-top: 1px solid #eee; padding-top: 12px; line-height: 1.4; }
-  .obj-tag { font-size: 0.65rem; color: #b2bec3; text-transform: uppercase; margin-bottom: 10px; font-weight: bold; letter-spacing: 1px; }
+  /* Sub-tabs for Contracts - Light Pill Style */
+  .sub-tabs { display: none; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 30px; }
+  .sub-btn { padding: 8px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.75rem; text-align: center; cursor: pointer; color: #636e72; background: white; transition: 0.2s; }
+  .sub-btn.active { border-color: var(--accent); color: var(--accent); font-weight: bold; }
 
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+  /* Flashcards - Restoring Original Spacing/Lightness */
+  .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
+  .card { background: var(--card-bg); border-radius: 8px; padding: 30px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s; text-align: center; position: relative; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+  
+  .obj-tag { position: absolute; top: 15px; left: 15px; font-size: 0.65rem; color: #aaa; text-transform: uppercase; font-weight: bold; }
+  .q-text { font-size: 1rem; line-height: 1.5; color: var(--primary); }
+  .a-text { font-weight: 600; color: var(--accent); line-height: 1.5; font-size: 1.1rem; }
+  .ex-text { margin-top: 15px; font-size: 0.85rem; color: #636e72; font-style: italic; border-top: 1px solid #eee; padding-top: 10px; }
 </style>
 </head>
 <body>
 
-<h1>PjM Master Study</h1>
-<p class="subtitle">NCARB Objectives 2025 Edition</p>
+<h1>PjM STUDY GUIDE</h1>
+<p class="subtitle">Select a section to begin testing your knowledge.</p>
 
 <div class="sections" id="secMenu">
   <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
@@ -43,9 +45,6 @@
   <div class="sec-btn" onclick="showSec(3)">3. Contracts</div>
   <div class="sec-btn" onclick="showSec(4)">4. Execution</div>
   <div class="sec-btn" onclick="showSec(5)">5. Quality Control</div>
-  <div class="sec-btn" onclick="showSec(6)">6. Team Coord</div>
-  <div class="sec-btn" onclick="showSec(7)">7. Claims/Legal</div>
-  <div class="sec-btn" onclick="showSec(8)">8. Ethics</div>
 </div>
 
 <div class="sub-tabs" id="conMenu">
@@ -60,22 +59,75 @@
 <script>
 const studyData = {
   1: [
-    {obj: "Obj 1.1", q: "A firm is awarded a project for a new library. The site has significant elevation changes. Who should the owner hire first?", a: "Civil Engineer", ex: "Civil engineers handle site-related issues like grading and drainage early on."},
-    {obj: "Obj 1.2", q: "Total billable hours: 1,400. Total hours worked: 2,000. What is the Utilization Rate?", a: "70%", ex: "Utilization Rate = (Direct Labor Hours / Total Hours) x 100."},
-    {obj: "Obj 1.1", q: "Which consultant identifies below-grade soil and water table conditions?", a: "Geotechnical Engineer", ex: "They provide the data needed for foundation design."},
-    {obj: "Obj 1.2", q: "If Project Labor is higher than Earned Value, what is happening?", a: "The project is over budget on labor.", ex: "You are spending more resources than the value of the work completed."}
+    {obj: "Obj 1.1", q: "A firm is awarded a library project on a site with significant elevation changes. Which consultant is hired first?", a: "Civil Engineer", ex: "Responsible for site grading and drainage early in the project."},
+    {obj: "Obj 1.2", q: "What is the Utilization Rate if billable hours are 1,400 out of 2,000 total hours?", a: "70%", ex: "Direct Hours divided by Total Labor Hours."},
+    {obj: "Obj 1.1", q: "Who identifies necessary below-grade conditions like soil bearing capacity?", a: "Geotechnical Engineer", ex: "Required for the structural foundation design."}
   ],
   2: [
-    {obj: "Obj 2.1", q: "What is the primary purpose of a Work Breakdown Structure (WBS)?", a: "To divide the project into manageable work packages.", ex: "WBS organizes the scope for scheduling and fee allocation."},
-    {obj: "Obj 2.1", q: "Which method identifies the sequence of tasks determining the shortest project duration?", a: "Critical Path Method (CPM)", ex: "CPM identifies tasks that cannot be delayed without delaying the whole project."},
-    {obj: "Obj 2.2", q: "What is a 'Milestone' in a project schedule?", a: "A significant event with zero duration.", ex: "Examples include '100% CD Submittal' or 'Permit Approval'."}
+    {obj: "Obj 2.1", q: "What is the primary purpose of a Work Breakdown Structure (WBS)?", a: "Divide project into manageable work packages.", ex: "Essential for scheduling and fee allocation."},
+    {obj: "Obj 2.1", q: "Which method determines the sequence of tasks that defines the project duration?", a: "Critical Path Method (CPM)", ex: "Tasks on the critical path have zero float."}
   ],
   3: {
     'B101': [
-      {obj: "Obj 3.1", q: "According to B101, what are the 5 Basic Services?", a: "SD, DD, CD, Bidding, and CA.", ex: "Everything else is an 'Additional Service' requiring extra fees."},
-      {obj: "Obj 3.1", q: "If the Owner terminates B101 for convenience, what is the Architect entitled to?", a: "Payment for work performed plus a termination fee.", ex: "The architect must be compensated for all services up to termination."}
+      {obj: "Obj 3.1", q: "What are the 5 Basic Services in AIA B101?", a: "SD, DD, CD, Bidding, and CA.", ex: "Any other service is 'Additional' and requires extra compensation."},
+      {obj: "Obj 3.1", q: "Who owns the copyright to the Instruments of Service?", a: "The Architect.", ex: "The Owner is granted a license to use them for the project."}
     ],
     'A201': [
-      {obj: "Obj 3.3", q: "Under A201, who has the authority to stop the work?", a: "Only the Owner.", ex: "The Architect can reject non-conforming work, but only the Owner can legally stop the job."},
-      {obj: "Obj 3.3", q: "Who is the
+      {obj: "Obj 3.3", q: "Under A201, who has the legal authority to stop the work?", a: "The Owner.", ex: "The Architect can reject work, but cannot order the Contractor to stop."},
+      {obj: "Obj 3.3", q: "How long does a party have to initiate a claim after an occurrence?", a: "21 days.", ex: "Required per A201 to allow for investigation."}
+    ],
+    'C401': [
+      {obj: "Obj 3.2", q: "Who is responsible for the technical accuracy of a consultant's design?", a: "The Consultant.", ex: "The Architect coordinates, but the Consultant is the licensed professional for their scope."}
+    ],
+    'A101': [
+      {obj: "Obj 3.3", q: "What is the payment structure of an A101 agreement?", a: "Stipulated Sum.", ex: "A fixed-price contract between Owner and Contractor."}
+    ]
+  },
+  4: [
+    {obj: "Obj 4.2", q: "How should an Architect respond to changes in scope to protect the firm?", a: "Analyze impact on fees and schedule immediately.", ex: "Prevents 'Scope Creep' and uncompensated labor."},
+    {obj: "Obj 4.3", q: "What defines 'Substantial Completion'?", a: "The project can be occupied for its intended use.", ex: "This milestone starts the warranty period."}
+  ],
+  5: [
+    {obj: "Obj 5.2", q: "Which process is 'product-oriented' and occurs at the end of a phase?", a: "Quality Control (QC)", ex: "Checking the final drawings; Quality Assurance (QA) is the process used during the work."},
+    {obj: "Obj 5.3", q: "What is the benefit of using BIM for Quality Control?", a: "Automated Clash Detection.", ex: "Reduces field errors by finding engineering conflicts in the model."}
+  ]
+};
+
+function showSec(id) {
+  document.querySelectorAll('.sec-btn').forEach((b, idx) => b.classList.toggle('active', (idx + 1) === id));
+  const cm = document.getElementById('conMenu');
+  if(id === 3) {
+    cm.style.display = 'grid';
+    loadCon('B101');
+  } else {
+    cm.style.display = 'none';
+    render(studyData[id]);
+  }
+}
+
+function loadCon(type) {
+  document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(type)));
+  render(studyData[3][type]);
+}
+
+function render(list) {
+  const container = document.getElementById("display");
+  container.innerHTML = "";
+  if(!list) return;
+  list.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    let flipped = false;
+    const face = () => card.innerHTML = `<div class="obj-tag">${item.obj}</div><div class="q-text">${item.q}</div>`;
+    const back = () => card.innerHTML = `<div class="obj-tag">Answer</div><div class="a-text">${item.a}</div><div class="ex-text">${item.ex}</div>`;
+    face();
+    card.onclick = () => { flipped = !flipped; flipped ? back() : face(); };
+    container.appendChild(card);
+  });
+}
+showSec(1);
+</script>
+</body>
+</html>
+
 
