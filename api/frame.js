@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a Senior Architect. Return ONLY a JSON object with these EXACT lowercase keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play."
+            content: "You are a Senior Architect. Analyze the address. Return ONLY a JSON object with these EXACT lowercase keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play."
           },
           { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
         ],
@@ -21,7 +21,6 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    // This part turns the AI's text into a real data object
     const aiContent = JSON.parse(data.choices[0].message.content);
     res.status(200).json(aiContent);
   } catch (error) {
