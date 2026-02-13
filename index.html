@@ -88,11 +88,16 @@
     btn.style.display = document.getElementById('pInput').value.length > 3 ? 'block' : 'none';
   }
 
-  async function frame() {
-    const input = document.getElementById('pInput').value;
-    const btn = document.getElementById('frameBtn');
-    btn.innerText = "THINKING...";
-    btn.disabled = true;
+  // Inside your frame() function, replace the table part with this:
+      document.getElementById('zoningTable').innerHTML = `
+          <tr><td class="label">District</td><td>${data.district}</td></tr>
+          <tr><td class="label">Max Height</td><td>${data.max_height}</td></tr>
+          <tr><td class="label">Parking</td><td>${data.parking_exemptions}</td></tr>
+      `;
+      document.getElementById('ibcTable').innerHTML = `
+          <tr><td class="label">Occupancy</td><td>${data.ibc_occupancy}</td></tr>
+          <tr><td class="label">Strategic Play</td><td>${data.strategic_play}</td></tr>
+      `;
 
     try {
       const response = await fetch('/api/frame', {
@@ -133,6 +138,7 @@
 </script>
 </body>
 </html>
+
 
 
 
