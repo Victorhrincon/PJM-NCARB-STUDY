@@ -15,9 +15,9 @@ export default async function handler(req, res) {
       content: `Analyze the technical feasibility for: ${prompt}`
     });
 
-    // 3. Run the Assistant (PASTE YOUR ID FROM THE SCREENSHOT BELOW)
+    // 3. Run the Assistant using your specific ID
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_cvTmq7kmfAlV9icLbUJB rxhX", // ID from your screenshot
+      assistant_id: "asst_cvTmq7kmfAlV9icLbUJBrxhX", 
     });
 
     // 4. Get the response from the Assistant
@@ -27,6 +27,8 @@ export default async function handler(req, res) {
       
       // Send the professional analysis back to your dashboard
       res.status(200).json({ analysis: aiResponse });
+    } else {
+      res.status(500).json({ error: "Assistant did not complete in time." });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
