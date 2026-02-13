@@ -3,179 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCARB PjM Study Guide</title>
-
+<title>A-Practice | Architectural Intelligence</title>
 <link rel="manifest" href="manifest.json?v=2">
-<meta name="theme-color" content="#00b894">
 <link rel="apple-touch-icon" href="icon-192.png?v=2">
-
 <style>
-  :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
-  body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-  h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; font-size: 1.6rem; }
-  .subtitle { margin-bottom: 30px; color: #636e72; font-size: 0.9rem; }
-  .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 900px; width: 100%; margin-bottom: 20px; }
-  .sec-btn { padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; text-align: center; font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
-  .sec-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .sec-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-  .sub-tabs { display: none; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 30px; }
-  .sub-btn { padding: 8px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.75rem; text-align: center; cursor: pointer; color: #636e72; background: white; transition: 0.2s; }
-  .sub-btn.active { border-color: var(--accent); color: var(--accent); font-weight: bold; }
-  .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
-  .card { background: var(--card-bg); border-radius: 8px; padding: 30px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s; text-align: center; position: relative; }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
-  .obj-tag { position: absolute; top: 15px; left: 15px; font-size: 0.65rem; color: #aaa; text-transform: uppercase; font-weight: bold; }
-  .q-text { font-size: 1rem; line-height: 1.5; color: var(--primary); }
-  .a-text { font-weight: 600; color: var(--accent); line-height: 1.5; font-size: 1.1rem; }
-  .ex-text { margin-top: 15px; font-size: 0.85rem; color: #636e72; font-style: italic; border-top: 1px solid #eee; padding-top: 10px; }
-  .shuffle-container { margin: 20px 0; }
-  .shuf-btn { padding: 10px 25px; border: 2px solid var(--accent); border-radius: 30px; background: transparent; color: var(--accent); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; transition: 0.3s; }
-  .shuf-btn:hover { background: var(--accent); color: white; }
+  :root { --bg: #ffffff; --text: #1a1a1a; --subtle: #888; --accent: #00b894; --border: #eee; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+  
+  header { padding: 60px 40px 20px; text-align: left; max-width: 800px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+  header h1 { font-weight: 500; letter-spacing: -0.5px; font-size: 1.5rem; margin: 0; }
+  header p { font-size: 0.9rem; color: var(--subtle); margin-top: 8px; font-weight: 300; }
+
+  main { flex: 1; display: flex; flex-direction: column; padding: 20px 40px; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+  .question { font-size: 1.8rem; font-weight: 400; margin-bottom: 40px; line-height: 1.3; }
+  
+  .input-container { width: 100%; margin-bottom: 20px; position: relative; }
+  textarea { width: 100%; height: 200px; border: none; outline: none; font-size: 1.1rem; color: var(--text); resize: none; background: transparent; padding: 0; line-height: 1.6; font-weight: 300; }
+  textarea::placeholder { color: #ccc; }
+
+  #modeFeedback { font-size: 0.85rem; color: var(--subtle); margin-bottom: 50px; opacity: 1; transition: 0.3s; font-style: italic; }
+
+  .footer-controls { margin-top: auto; padding-bottom: 60px; }
+  .modes { display: flex; gap: 40px; margin-bottom: 30px; }
+  .mode-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; padding: 0; transition: 0.3s; }
+  .mode-btn.active { color: var(--text); }
+
+  .upload-row { display: flex; gap: 20px; border-top: 1px solid #f0f0f0; padding-top: 20px; }
+  .upload-tag { font-size: 0.75rem; color: #999; cursor: pointer; transition: 0.2s; }
+  .upload-tag:hover { color: var(--text); }
+
+  #frameBtn { position: fixed; bottom: 40px; right: 40px; background: var(--text); color: white; border: none; padding: 15px 40px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; cursor: pointer; display: none; border-radius: 4px; }
 </style>
 </head>
 <body>
 
-<h1>PjM MASTER STUDY</h1>
-<p class="subtitle">Complete Vault + Shuffle + Monkey Icon</p>
+<header>
+  <h1>A-Practice</h1>
+  <p>Leadership-level project framing</p>
+</header>
 
-<div class="sections" id="secMenu">
-  <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
-  <div class="sec-btn" onclick="showSec(2)">2. Work Planning</div>
-  <div class="sec-btn" onclick="showSec(3)">3. Contracts</div>
-  <div class="sec-btn" onclick="showSec(4)">4. Execution</div>
-  <div class="sec-btn" onclick="showSec(5)">5. Quality Control</div>
-</div>
+<main>
+  <div class="question">What are you trying to understand about this project?</div>
+  
+  <div class="input-container">
+    <textarea id="pInput" placeholder="Describe the genesis of the project. Be as specific or as broad as you need to be." oninput="monitor()"></textarea>
+  </div>
 
-<div class="sub-tabs" id="conMenu">
-  <div class="sub-btn" onclick="loadCon('B101')">B101 (Owner-Arch)</div>
-  <div class="sub-btn" onclick="loadCon('A201')">A201 (Gen. Cond)</div>
-  <div class="sub-btn" onclick="loadCon('C401')">C401 (Arch-Cons)</div>
-  <div class="sub-btn" onclick="loadCon('A101')">A101 (Owner-Cont)</div>
-</div>
+  <div id="modeFeedback">Senior-level project framing, feasibility, and risk.</div>
 
-<div class="shuffle-container">
-    <button class="shuf-btn" onclick="shuffleCurrent()">Shuffle Questions</button>
-</div>
+  <div class="footer-controls">
+    <div class="modes">
+      <button class="mode-btn" onclick="sm('residential', this)">Residential</button>
+      <button class="mode-btn active" onclick="sm('commercial', this)">Commercial</button>
+      <button class="mode-btn" onclick="sm('experimental', this)">Experimental</button>
+    </div>
 
-<div id="display" class="card-container"></div>
+    <div class="upload-row">
+      <span class="upload-tag">+ zoning</span>
+      <span class="upload-tag">+ program</span>
+      <span class="upload-tag">+ survey</span>
+    </div>
+  </div>
+
+  <button id="frameBtn" onclick="frame()">Frame Project</button>
+</main>
 
 <script>
-let currentSet = [];
-const studyData = {
-  1: [
-    {obj: "Obj 1.1", q: "Owner is assembling a team for an 8-story greenfield office. Which members are required? (Select 4)", a: "Architect, MEP, Structural, Geotechnical.", ex: "Geotech is critical for foundation/site data."},
-    {obj: "Obj 1.1", q: "IPD renovation of a 1905 facility. Who to hire before SD? (Select 4)", a: "GC, Geotechnical, Historical Preservationist, CM.", ex: "IPD involves GC/CM early; 1905 facade needs historical expertise."},
-    {obj: "Obj 1.1", q: "DB Refrigerated Warehouse project. Which consultants must be hired? (Select 3)", a: "GC, Refrigeration Consultant, Structural.", ex: "DB needs a contractor; refrigeration is specialty expertise."},
-    {obj: "Obj 1.2", q: "Direct hours = 1,400. Total hours = 2,000. Utilization Rate?", a: "70%", ex: "1,400 / 2,000 = 0.70."},
-    {obj: "Obj 1.1", q: "Staffing strategy for first hospital project to ensure quality?", a: "Balanced/Matrix Staffing.", ex: "Mixes senior oversight with junior production."},
-    {obj: "Obj 1.2", q: "Project Labor > Earned Value. First step?", a: "Assess staffing levels relative to fees.", ex: "Determine why resources are burned faster than work is done."},
-    {obj: "Obj 1.1", q: "Specialized lighting designer fee category?", a: "Direct/Reimbursable Expense.", ex: "Based on contract service definitions."},
-    {obj: "Obj 1.2", q: "Principal spends 90% time on marketing. Impact?", a: "Lowers firm's overall Utilization Rate.", ex: "Marketing is indirect labor."},
-    {obj: "Obj 1.1", q: "Who provides building design services in conceptual phase?", a: "Architect.", ex: "Primary role for design."},
-    {obj: "Obj 1.1", q: "Who identifies below-grade conditions?", a: "Geotechnical Engineer.", ex: "Critical for foundations."}
-  ],
-  2: [
-    {obj: "Obj 2.1", q: "Unsafe trenching/hard hats observed. Architect response?", a: "Memo to Contractor, copy Owner.", ex: "Architect informs but doesn't direct workers."},
-    {obj: "Obj 2.1", q: "Design error found internally. First step?", a: "Modify internal project work plan.", ex: "Fix root cause internally before notifying owner."},
-    {obj: "Obj 2.2", q: "Confirming parade timing constraint? Contact?", a: "Lindy Scralin (County Fair Board).", ex: "Identify constituent associated with constraint."},
-    {obj: "Obj 2.1", q: "Primary purpose of a WBS?", a: "Divide project into manageable work packages.", ex: "Essential for scheduling and fees."},
-    {obj: "Obj 2.2", q: "CPM scheduling benefit?", a: "Identifies tasks that determine project duration.", ex: "Shows zero float tasks."},
-    {obj: "Obj 2.3", q: "Document for formal finish change decision?", a: "Meeting Minutes.", ex: "Serves as historical record."},
-    {obj: "Obj 2.2", q: "Client requests 2-week 'pause'. PM duty?", a: "Evaluate impact on Critical Path.", ex: "Determine how outside factors hit milestones."},
-    {obj: "Obj 2.1", q: "Contractor wants material change to save time. Verify first?", a: "Design intent and budget compliance.", ex: "Maintain quality standards."},
-    {obj: "Obj 2.3", q: "Consultant isn't getting owner info. Facilitator?", a: "The Architect.", ex: "Architect coordinates all constituents."},
-    {obj: "Obj 2.1", q: "Behind schedule but budget is healthy. Resource move?", a: "Re-allocate staff from projects with 'float'.", ex: "Manage time to meet milestones."}
-  ],
-  3: {
-    'B101': [
-      {obj: "Obj 3.1", q: "5 Basic Services in AIA B101?", a: "SD, DD, CD, Bidding, and CA.", ex: "Defined in Article 3."},
-      {obj: "Obj 3.4", q: "Impact of Owner's consultants?", a: "Sequencing and coordination required.", ex: "Integrate work into overall project."},
-      {obj: "Obj 3.1", q: "Copyright owner of Instruments of Service?", a: "The Architect.", ex: "Owner receives license."}
-    ],
-    'A201': [
-      {obj: "Obj 3.3", q: "Under A201, who can stop the work?", a: "Only the Owner.", ex: "Architect rejects work; Owner stops it."},
-      {obj: "Obj 3.3", q: "Default Initial Decision Maker (IDM)?", a: "The Architect.", ex: "Reviews claims before mediation."},
-      {obj: "Obj 3.3", q: "Contractor finds site error. Claim notification window?", a: "21 Days.", ex: "Standard A201 notification window."}
-    ],
-    'C401': [
-      {obj: "Obj 3.2", q: "Technical accuracy of consultant design?", a: "The Consultant.", ex: "Architect coordinates; Consultant is pro."},
-      {obj: "Obj 3.2", q: "Pay consultant if Owner hasn't paid Arch?", a: "Yes, typically.", ex: "C401 best efforts/payment timing."}
-    ],
-    'A101': [
-      {obj: "Obj 3.3", q: "A101 pricing structure?", a: "Stipulated Sum.", ex: "Fixed-price agreement."}
-    ]
-  },
-  4: [
-    {obj: "Obj 4.1", q: "Estimate 15% over budget in DD. First step?", a: "Evaluate estimate to mitigate scope/materials.", ex: "Align with owner budget."},
-    {obj: "Obj 4.2", q: "Owner wants weekly extra meeting. PM action?", a: "Analyze impact on fees/schedule.", ex: "Determine if this is Additional Service."},
-    {obj: "Obj 4.4", q: "DRB rejects signage on permit set. Best action?", a: "Remove signage from set, submit separately.", ex: "Allows primary permit to proceed."},
-    {obj: "Obj 4.3", q: "Responsible for DBB close-out docs?", a: "The Architect.", ex: "Coordinates CA and close-out."},
-    {obj: "Obj 4.1", q: "Compare construction estimate against what?", a: "Market rates, history, and owner budget.", ex: "Ensure constant budget monitoring."},
-    {obj: "Obj 4.2", q: "Unforeseen asbestos found. PM first duty?", a: "Evaluate impact on budget and financing.", ex: "Constant monitoring of project execution."},
-    {obj: "Obj 4.3", q: "Conflict between Structural/MEP found by GC. First step?", a: "Review internal docs for delivery method support.", ex: "Coordinate docs before instruction."},
-    {obj: "Obj 4.4", q: "Agency issuing Certificate of Occupancy?", a: "The AHJ.", ex: "Building official provides final approval."},
-    {obj: "Obj 4.1", q: "Contractor resubmitting rejected custom fixture?", a: "Ensure resubmittal follows administrative procedures.", ex: "Management of project execution."},
-    {obj: "Obj 4.4", q: "New zoning hearing for project height. Bring who?", a: "Client and height-related consultants.", ex: "Collaborate for AHJ approvals."}
-  ],
-  5: [
-    {obj: "Obj 5.1", q: "Architect in new jurisdiction. First step?", a: "Identify AHJs and submittal requirements.", ex: "Understanding permits throughout project."},
-    {obj: "Obj 5.2", q: "Insurance for technical error claim?", a: "Professional Liability (E&O).", ex: "Covers negligence in documentation."},
-    {obj: "Obj 5.3", q: "Structural columns conflict with architect hallway. Action?", a: "Notify Structural and coordinate internally.", ex: "Architect responsible for coordinating consultants."},
-    {obj: "Obj 5.2", q: "Policy where every set is reviewed by a principal?", a: "Peer Review / Quality Control.", ex: "Specific review process to evaluate quality."},
-    {obj: "Obj 5.1", q: "Building exceeds zoning height. First step?", a: "Identify design impact and determine variance need.", ex: "Impact of zoning on design is critical."},
-    {obj: "Obj 5.4", q: "Cheaper glazing system doesn't meet thermal goals. Management?", a: "Collaborate to maintain design integrity.", ex: "Monitor design objectives across phases."},
-    {obj: "Obj 5.2", q: "Primary goal of 'Standard of Care'?", a: "Same level of skill as other pros in same locality.", ex: "Benchmark for reducing liability."},
-    {obj: "Obj 5.3", q: "MEP using outdated architectural backgrounds. Failure in?", a: "Consultant Coordination.", ex: "Regular collaboration is essential."},
-    {obj: "Obj 5.2", q: "Internal review timing (80% complete)? (Check 4)", a: "M2W1, M3W3, M6W3, M8W1.", ex: "Calculated based on quality schedule."},
-    {obj: "Obj 5.3", q: "Stakeholder engagement frequency? (Row D)", a: "Interview early, update at phase start.", ex: "Based on communication plan logic."}
-  ]
-};
+  let m = 'commercial';
+  const f = {
+    residential: "Risk-aware guidance for real residential projects.",
+    commercial: "Senior-level project framing, feasibility, and risk.",
+    experimental: "Explore future practice. No assumptions. No liability."
+  };
 
-function showSec(id) {
-  document.querySelectorAll('.sec-btn').forEach((b, idx) => b.classList.toggle('active', (idx + 1) === id));
-  const cm = document.getElementById('conMenu');
-  if(id === 3) {
-    cm.style.display = 'grid';
-    loadCon('B101');
-  } else {
-    cm.style.display = 'none';
-    currentSet = [...studyData[id]];
-    render(currentSet);
+  function sm(mode, btn) {
+    m = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('modeFeedback').innerText = f[mode];
   }
-}
 
-function loadCon(type) {
-  document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(type)));
-  currentSet = [...studyData[3][type]];
-  render(currentSet);
-}
+  function monitor() {
+    const btn = document.getElementById('frameBtn');
+    btn.style.display = document.getElementById('pInput').value.length > 20 ? 'block' : 'none';
+  }
 
-function shuffleCurrent() {
-    currentSet.sort(() => Math.random() - 0.5);
-    render(currentSet);
-}
-
-function render(list) {
-  const container = document.getElementById("display");
-  container.innerHTML = "";
-  if(!list) return;
-  list.forEach((item, i) => {
-    const card = document.createElement("div");
-    card.className = "card";
-    let flipped = false;
-    const face = () => card.innerHTML = `<div class="obj-tag">${item.obj}</div><div class="q-text">${item.q}</div>`;
-    const back = () => card.innerHTML = `<div class="obj-tag">Answer</div><div class="a-text">${item.a}</div><div class="ex-text">${item.ex}</div>`;
-    face();
-    card.onclick = () => { flipped = !flipped; flipped ? back() : face(); };
-    container.appendChild(card);
-  });
-}
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').then(() => console.log('Service Worker Registered'));
-}
-showSec(1);
+  function frame() {
+    // This will connect to the analyze.js bridge later
+    alert("Initiating Project Genesis Review in " + m + " mode...");
+  }
 </script>
 </body>
 </html>
+
 
