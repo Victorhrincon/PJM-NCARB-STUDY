@@ -8,11 +8,11 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
       },
       body: JSON.stringify({
-        model: "model: "gpt-4o",
+        model: "gpt-4o", // Using the newest model which unlocks faster
         messages: [
           {
             role: "system",
-            content: "You are a Senior Architect. Return ONLY a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Provide specific architectural data."
+            content: "You are a Senior Architect. Return ONLY a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play."
           },
           { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
         ],
@@ -22,16 +22,10 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // SAFETY CHECK: This prevents the 'reading 0' error from your logs
-    if (!data.choices || data.choices.length === 0) {
-      console.error("OpenAI Error Response:", data);
-      return res.status(200).json({ 
-        district: "Check API Key/Credits", 
-        max_height: "Error", 
-        parking_exemptions: "Error", 
-        ibc_occupancy: "Error", 
-        strategic_play: "OpenAI account might be empty." 
-      });
+    // Safety check for the OpenAI response
+    if (!data.choices || !data.choices[0].message.content) {
+      console.error("OpenAI Error:", data);
+      throw new Error("AI returned an empty response.");
     }
 
     const aiContent = JSON.parse(data.choices[0].message.content);
