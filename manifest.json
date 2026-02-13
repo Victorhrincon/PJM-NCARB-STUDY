@@ -3,9 +3,6 @@
   "short_name": "PJM Study",
   "start_url": "/PJM-NCARB-STUDY/index.html",
   "display": "standalone",
-  "background_color": "#f9f9f9",
-  "theme_color": "#00b894",
-  "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png?v=2",
