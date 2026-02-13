@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a Senior Architect. Return ONLY a JSON object. Use these EXACT lowercase keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Provide real, specific architectural data for the address."
+            content: "You are a Senior Architect. Analyze the address. You MUST return a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Fill them with real data."
           },
           { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
         ],
@@ -21,15 +21,12 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
+    console.log("AI RESPONSE RAW:", data.choices[0].message.content); // THIS IS THE TRUTH LOG
     
-    if (data.choices && data.choices[0].message.content) {
-      // Parse the AI's string into a real object
-      const aiContent = JSON.parse(data.choices[0].message.content);
-      res.status(200).json(aiContent);
-    } else {
-      res.status(500).json({ error: "OpenAI returned no data" });
-    }
+    const aiContent = JSON.parse(data.choices[0].message.content);
+    res.status(200).json(aiContent);
   } catch (error) {
+    console.error("DETAILED ERROR:", error.message);
     res.status(500).json({ error: error.message });
   }
 }
