@@ -1,30 +1,39 @@
 import OpenAI from "openai";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
+// Set Vercel timeout to 60 seconds to allow time for PDF scanning
 export const config = {
-  maxDuration: 60, // Sets the timeout to 60 seconds (max for Hobby plan)
+  maxDuration: 60,
 };
 
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export default async function handler(req, res) {
   try {
     const { prompt } = JSON.parse(req.body);
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o", // Use the fastest, smartest model
-      messages: [
-        {
-          role: "system",
-          content: `You are a Senior Architect. Analyze the technical feasibility for the provided address. 
-          Focus on: District, Max Height, FAR, and Strategic Plays. 
-          Be technical, concise, and professional.`
-        },
-        { role: "user", content: prompt }
-      ],
+    // 1. Create a Thread
+    const thread = await openai.beta.threads.create();
+
+    // 2. Add the address to the thread
+    await openai.beta.threads.messages.create(thread.id, {
+      role: "user",
+      content: `Analyze the technical feasibility for: ${prompt}`
     });
 
-    res.status(200).json({ analysis: response.choices[0].message.content });
+    // 3. Run the Assistant (using your specific ID from the screenshot)
+    const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
+      assistant_id: "asst_cvTmq7kmfAlV9icLbUJBrxhX", 
+    });
+
+    // 4. Get the response
+    if (run.status === 'completed') {
+      const messages = await openai.beta.threads.messages.list(thread.id);
+      const aiResponse = messages.data[0].content[0].text.value;
+      res.status(200).json({ analysis: aiResponse });
+    } else {
+      res.status(500).json({ error: "Assistant timeout or failure" });
+    }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
