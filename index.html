@@ -1,27 +1,152 @@
-{
-  "name": "PJM NCARB Study",
-  "short_name": "PJM Study",
-  "start_url": "/PJM-NCARB-STUDY/index.html",
-  "display": "standalone",
-  "icons": [
-    {
-      "src": "icon-192.png?v=2",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icon-512.png?v=2",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCARB PjM Study Guide</title>
+
+<link rel="manifest" href="manifest.json?v=2">
+<meta name="theme-color" content="#00b894">
+<link rel="apple-touch-icon" href="icon-192.png?v=2">
+
+<style>
+  :root { --primary: #2d3436; --accent: #00b894; --bg: #f9f9f9; --card-bg: #ffffff; }
+  body { font-family: 'Segoe UI', Helvetica, sans-serif; background: var(--bg); color: var(--primary); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+  h1 { font-weight: 300; letter-spacing: 2px; margin-bottom: 10px; font-size: 1.6rem; }
+  .subtitle { margin-bottom: 30px; color: #636e72; font-size: 0.9rem; }
+  .sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; max-width: 900px; width: 100%; margin-bottom: 20px; }
+  .sec-btn { padding: 12px; border: 1px solid #ddd; border-radius: 4px; background: white; cursor: pointer; text-align: center; font-size: 0.8rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; color: var(--primary); }
+  .sec-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .sec-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .sub-tabs { display: none; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; width: 100%; max-width: 900px; margin-bottom: 30px; }
+  .sub-btn { padding: 8px; border: 1px solid #ddd; border-radius: 20px; font-size: 0.75rem; text-align: center; cursor: pointer; color: #636e72; background: white; transition: 0.2s; }
+  .sub-btn.active { border-color: var(--accent); color: var(--accent); font-weight: bold; }
+  .card-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; max-width: 1000px; }
+  .card { background: var(--card-bg); border-radius: 8px; padding: 30px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.02); transition: transform 0.2s; text-align: center; position: relative; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+  .obj-tag { position: absolute; top: 15px; left: 15px; font-size: 0.65rem; color: #aaa; text-transform: uppercase; font-weight: bold; }
+  .q-text { font-size: 1rem; line-height: 1.5; color: var(--primary); }
+  .a-text { font-weight: 600; color: var(--accent); line-height: 1.5; font-size: 1.1rem; }
+  .ex-text { margin-top: 15px; font-size: 0.85rem; color: #636e72; font-style: italic; border-top: 1px solid #eee; padding-top: 10px; }
+  
+  /* SHUFFLE BUTTON STYLE */
+  .shuffle-container { margin: 20px 0; }
+  .shuf-btn { padding: 10px 25px; border: 2px solid var(--accent); border-radius: 30px; background: transparent; color: var(--accent); cursor: pointer; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; transition: 0.3s; }
+  .shuf-btn:hover { background: var(--accent); color: white; }
+</style>
+</head>
+<body>
+
+<h1>PjM STUDY GUIDE</h1>
+<p class="subtitle">Complete Master Vault</p>
+
+<div class="sections" id="secMenu">
+  <div class="sec-btn" onclick="showSec(1)">1. Resource Mgmt</div>
+  <div class="sec-btn" onclick="showSec(2)">2. Work Planning</div>
+  <div class="sec-btn" onclick="showSec(3)">3. Contracts</div>
+  <div class="sec-btn" onclick="showSec(4)">4. Execution</div>
+  <div class="sec-btn" onclick="showSec(5)">5. Quality Control</div>
+</div>
+
+<div class="sub-tabs" id="conMenu">
+  <div class="sub-btn" onclick="loadCon('B101')">B101 (Owner-Arch)</div>
+  <div class="sub-btn" onclick="loadCon('A201')">A201 (Gen. Cond)</div>
+  <div class="sub-btn" onclick="loadCon('C401')">C401 (Arch-Cons)</div>
+  <div class="sub-btn" onclick="loadCon('A101')">A101 (Owner-Cont)</div>
+</div>
+
+<div class="shuffle-container">
+    <button class="shuf-btn" onclick="shuffleCurrent()">Shuffle Questions</button>
+</div>
+
+<div id="display" class="card-container"></div>
+
+<script>
+let currentSet = [];
+const studyData = {
+  1: [
+    {obj: "Obj 1.1", q: "Team for 8-story office with underground parking? (Select 4)", a: "Arch, MEP, Structural, Geotech.", ex: "Geotech is critical for foundation data."},
+    {obj: "Obj 1.1", q: "IPD renovation of 1905 facility? (Select 4)", a: "GC, Geotech, Historian, CM.", ex: "IPD requires GC/CM in predesign."},
+    {obj: "Obj 1.2", q: "Utilization Rate formula?", a: "Direct Labor / Total Labor", ex: "Measures billable efficiency."},
+    {obj: "Obj 1.1", q: "DB Refrigerated Warehouse? (Select 3)", a: "GC, Refrigeration Cons., Structural.", ex: "Refrigeration is specialty expertise."},
+    {obj: "Obj 1.1", q: "Staffing level strategy for first hospital?", a: "Balanced/Matrix Staffing.", ex: "Mixes senior oversight with junior production."}
+  ],
+  2: [
+    {obj: "Obj 2.1", q: "Unsafe trenching on site. Response?", a: "Memo to Contractor, copy Owner.", ex: "Inform contractor; don't direct workers."},
+    {obj: "Obj 2.1", q: "Design error found internally? First step?", a: "Modify internal project work plan.", ex: "Define path forward before talking to owner."},
+    {obj: "Obj 2.2", q: "Parade timing constraint? Contact?", a: "Lindy Scralin (County Fair Board).", ex: "Identify specific constituent for constraint."}
+  ],
+  3: {
+    'B101': [{obj: "Obj 3.1", q: "5 Basic Services?", a: "SD, DD, CD, Bidding, CA.", ex: "Standard per B101 Article 3."}],
+    'A201': [{obj: "Obj 3.3", q: "Who can stop work?", a: "Only the Owner.", ex: "Architect can only reject work."}],
+    'C401': [{obj: "Obj 3.2", q: "Technical accuracy responsibility?", a: "The Consultant.", ex: "They are the licensed pro."}],
+    'A101': [{obj: "Obj 3.3", q: "A101 Pricing?", a: "Stipulated Sum.", ex: "Fixed price agreement."}]
+  },
+  4: [
+    {obj: "Obj 4.1", q: "Estimate 15% over budget in DD?", a: "Evaluate and mitigate scope/materials.", ex: "Maintain budget compliance."},
+    {obj: "Obj 4.4", q: "DRB rejects signage on permit set?", a: "Remove signage, submit separate permit.", ex: "Allows primary permit to proceed."}
+  ],
+  5: [
+    {obj: "Obj 5.2", q: "Internal review timing (80% complete)?", a: "M2W1, M3W3, M6W3, M8W1.", ex: "Calculated based on quality schedule."},
+    {obj: "Obj 5.3", q: "Stakeholder engagement (Row D)?", a: "Interview early, update at phase start.", ex: "Based on communication plan logic."}
   ]
+};
+
+function showSec(id) {
+  document.querySelectorAll('.sec-btn').forEach((b, idx) => b.classList.toggle('active', (idx + 1) === id));
+  const cm = document.getElementById('conMenu');
+  if(id === 3) {
+    cm.style.display = 'grid';
+    loadCon('B101');
+  } else {
+    cm.style.display = 'none';
+    currentSet = [...studyData[id]];
+    render(currentSet);
+  }
 }
 
+function loadCon(type) {
+  document.querySelectorAll('.sub-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(type)));
+  currentSet = [...studyData[3][type]];
+  render(currentSet);
+}
 
+function shuffleCurrent() {
+    currentSet.sort(() => Math.random() - 0.5);
+    render(currentSet);
+}
 
+function render(list) {
+  const container = document.getElementById("display");
+  container.innerHTML = "";
+  if(!list) return;
+  list.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    let flipped = false;
+    const face = () => card.innerHTML = `<div class="obj-tag">${item.obj}</div><div class="q-text">${item.q}</div>`;
+    const back = () => card.innerHTML = `<div class="obj-tag">Answer</div><div class="a-text">${item.a}</div><div class="ex-text">${item.ex}</div>`;
+    face();
+    card.onclick = () => { flipped = !flipped; flipped ? back() : face(); };
+    container.appendChild(card);
+  });
+}
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then(() => console.log('Service Worker Registered'));
+}
 
-
-
-
-
+showSec(1);
+</script>
+</body>
+</html>
