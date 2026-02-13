@@ -12,9 +12,9 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a Senior Architect. Return ONLY a JSON object. NO MARKDOWN. NO BACKTICKS. Use these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Provide real architectural data for the address provided."
+            content: "You are a Senior Architect. Return ONLY a JSON object. Use these EXACT lowercase keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Provide real, specific architectural data for the address."
           },
-          { role: "user", content: `Analyze this project: ${prompt}. Mode: ${mode}.` }
+          { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
         ],
         response_format: { type: "json_object" }
       })
@@ -22,15 +22,14 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     
-    // Check if OpenAI actually sent a message back
     if (data.choices && data.choices[0].message.content) {
+      // Parse the AI's string into a real object
       const aiContent = JSON.parse(data.choices[0].message.content);
       res.status(200).json(aiContent);
     } else {
-      throw new Error("OpenAI returned an empty response.");
+      res.status(500).json({ error: "OpenAI returned no data" });
     }
   } catch (error) {
-    console.error("API Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 }
