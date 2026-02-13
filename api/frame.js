@@ -12,7 +12,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: "system",
-            content: "You are a Senior Architect. Analyze the address. You MUST return a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Fill them with real data."
+            content: "You are a Senior Architect. Return ONLY a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Provide specific architectural data."
           },
           { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
         ],
@@ -21,12 +21,23 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    console.log("AI RESPONSE RAW:", data.choices[0].message.content); // THIS IS THE TRUTH LOG
-    
+
+    // SAFETY CHECK: This prevents the 'reading 0' error from your logs
+    if (!data.choices || data.choices.length === 0) {
+      console.error("OpenAI Error Response:", data);
+      return res.status(200).json({ 
+        district: "Check API Key/Credits", 
+        max_height: "Error", 
+        parking_exemptions: "Error", 
+        ibc_occupancy: "Error", 
+        strategic_play: "OpenAI account might be empty." 
+      });
+    }
+
     const aiContent = JSON.parse(data.choices[0].message.content);
     res.status(200).json(aiContent);
   } catch (error) {
-    console.error("DETAILED ERROR:", error.message);
+    console.error("CRASH ERROR:", error.message);
     res.status(500).json({ error: error.message });
   }
 }
