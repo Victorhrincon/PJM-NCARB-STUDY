@@ -1,37 +1,39 @@
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
 export default async function handler(req, res) {
   try {
-    const { prompt, mode } = JSON.parse(req.body);
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o", // Using the newest model which unlocks faster
-        messages: [
-          {
-            role: "system",
-            content: "You are a Senior Architect. Return ONLY a JSON object with these EXACT keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play."
-          },
-          { role: "user", content: `Analyze: ${prompt} in ${mode} mode.` }
-        ],
-        response_format: { type: "json_object" }
-      })
+    const { prompt } = JSON.parse(req.body);
+
+    // 1. Create a Thread (a private conversation for this specific search)
+    const thread = await openai.beta.threads.create();
+
+    // 2. Send the address to the thread
+    await openai.beta.threads.messages.create(thread.id, {
+      role: "user",
+      content: `Analyze this address using the uploaded zoning PDFs: ${prompt}`
     });
 
-    const data = await response.json();
+    // 3. Run the Assistant (REPLACE 'asst_YOUR_ID' WITH YOUR ACTUAL ID)
+    const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
+      assistant_id: "asst_YOUR_ID_HERE",
+      instructions: "Return the results as a JSON object with these keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Ensure you cite specific sections from the PDF."
+    });
 
-    // Safety check for the OpenAI response
-    if (!data.choices || !data.choices[0].message.content) {
-      console.error("OpenAI Error:", data);
-      throw new Error("AI returned an empty response.");
+    // 4. Retrieve the Assistant's expert answer
+    if (run.status === 'completed') {
+      const messages = await openai.beta.threads.messages.list(thread.id);
+      const aiResponse = messages.data[0].content[0].text.value;
+      
+      // We parse the AI's text back into a format your website's tables can read
+      const cleanJson = JSON.parse(aiResponse.replace(/```json|```/g, ''));
+      res.status(200).json(cleanJson);
+    } else {
+      res.status(500).json({ error: "Assistant timeout" });
     }
-
-    const aiContent = JSON.parse(data.choices[0].message.content);
-    res.status(200).json(aiContent);
   } catch (error) {
-    console.error("CRASH ERROR:", error.message);
+    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
