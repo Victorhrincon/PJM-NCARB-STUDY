@@ -1,135 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A-Practice | Architectural Intelligence</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
-  :root { --bg: #ffffff; --text: #1a1a1a; --subtle: #888; --accent: #0047FF; --border: #eee; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-  header { padding: 60px 40px 20px; text-align: left; max-width: 800px; width: 100%; margin: 0 auto; box-sizing: border-box; }
-  header h1 { font-weight: 500; letter-spacing: -0.5px; font-size: 1.5rem; margin: 0; }
-  header p { font-size: 0.9rem; color: var(--subtle); margin-top: 8px; font-weight: 300; }
-  main { flex: 1; display: flex; flex-direction: column; padding: 20px 40px; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box; overflow-y: auto; }
-  .question { font-size: 1.8rem; font-weight: 400; margin-bottom: 40px; line-height: 1.3; }
-  .input-container { width: 100%; margin-bottom: 20px; position: relative; }
-  textarea { width: 100%; height: 150px; border: none; outline: none; font-size: 1.1rem; color: var(--text); resize: none; background: transparent; padding: 0; line-height: 1.6; font-weight: 300; }
-  #modeFeedback { font-size: 0.85rem; color: var(--subtle); margin-bottom: 50px; font-style: italic; }
-  .footer-controls { margin-top: auto; padding-bottom: 60px; }
-  .modes { display: flex; gap: 40px; margin-bottom: 30px; }
-  .mode-btn { background: none; border: none; color: #ccc; cursor: pointer; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; padding: 0; transition: 0.3s; }
-  .mode-btn.active { color: var(--text); }
-  #resultsArea { display: none; border-top: 2px solid #000; padding-top: 40px; margin-top: 20px; }
-  .data-card { margin-bottom: 30px; }
-  .data-card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 10px; }
-  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-  .data-table tr { border-bottom: 1px solid #eee; }
-  .data-table td { padding: 10px 0; vertical-align: top; }
-  .label { color: var(--subtle); width: 40%; }
-  #frameBtn { position: fixed; bottom: 40px; right: 40px; background: var(--text); color: white; border: none; padding: 15px 40px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; cursor: pointer; display: none; border-radius: 4px; z-index: 100; }
+  /* ... existing styles ... */
+  .button-row { display: flex; gap: 10px; margin-top: 20px; }
+  #frameBtn { 
+    position: relative; bottom: auto; right: auto; /* Moves it from the corner */
+    display: block; width: 100%; background: var(--text); color: white; 
+    padding: 15px; border-radius: 4px; font-weight: 600; cursor: pointer;
+  }
+  #pdfBtn { 
+    display: none; width: 100%; background: var(--accent); color: white; 
+    padding: 15px; border: none; border-radius: 4px; font-weight: 600; 
+    cursor: pointer; margin-top: 10px;
+  }
 </style>
-</head>
-<body>
 
-<header>
-  <h1>A-Practice</h1>
-  <p>Leadership-level project framing</p>
-</header>
-
-<main id="content">
-  <div class="question">What are you trying to understand about this project?</div>
-  <div class="input-container">
-    <textarea id="pInput" placeholder="Describe the genesis of the project..." oninput="monitor()"></textarea>
-  </div>
-  <div id="modeFeedback">Senior-level project framing, feasibility, and risk.</div>
-  
-  <div id="resultsArea">
-    <div class="data-card">
-        <h3>Zoning & Feasibility</h3>
-        <table class="data-table" id="zoningTable"></table>
-    </div>
-    <div class="data-card">
-        <h3>IBC & Life Safety</h3>
-        <table class="data-table" id="ibcTable"></table>
-    </div>
-  </div>
-
-  <div class="footer-controls" id="footer">
-    <div class="modes">
-      <button class="mode-btn" onclick="sm('residential', this)">Residential</button>
-      <button class="mode-btn active" onclick="sm('commercial', this)">Commercial</button>
-      <button class="mode-btn" onclick="sm('experimental', this)">Experimental</button>
-    </div>
-    <div class="upload-row">
-      <span style="font-size: 0.75rem; color: #999;">+ zoning + program + survey</span>
-    </div>
-  </div>
-  <button id="frameBtn" onclick="frame()">Frame Project</button>
+<button id="frameBtn" onclick="frame()">Frame Project</button>
+  <button id="pdfBtn" onclick="downloadPDF()">Save as NCARB Report (PDF)</button>
 </main>
 
 <script>
-  let m = 'commercial';
-  const f = {
-    residential: "Risk-aware guidance for real residential projects.",
-    commercial: "Senior-level project framing, feasibility, and risk.",
-    experimental: "Explore future practice. No assumptions. No liability."
-  };
-
-  function sm(mode, btn) {
-    m = mode;
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('modeFeedback').innerText = f[mode];
-  }
-
-  function monitor() {
-    const btn = document.getElementById('frameBtn');
-    btn.style.display = document.getElementById('pInput').value.length > 3 ? 'block' : 'none';
-  }
+  // ... existing functions (sm, monitor) ...
 
   async function frame() {
-    const input = document.getElementById('pInput').value;
-    const btn = document.getElementById('frameBtn');
-    btn.innerText = "THINKING...";
-    btn.disabled = true;
+    // ... keep your existing frame() logic ...
+    // Add this line at the end of the 'try' block:
+    document.getElementById('pdfBtn').style.display = 'block'; 
+  }
 
-    try {
-      const response = await fetch('/api/frame', {
-        method: 'POST',
-        body: JSON.stringify({ prompt: input, mode: m })
-      });
-      const data = await response.json();
-
-      document.querySelector('.question').style.display = 'none';
-      document.getElementById('modeFeedback').style.display = 'none';
-      document.getElementById('footer').style.display = 'none';
-      document.getElementById('resultsArea').style.display = 'block';
-      document.getElementById('pInput').style.height = '60px';
-      document.getElementById('pInput').style.fontSize = '0.9rem';
-
-      document.getElementById('zoningTable').innerHTML = `
-          <tr><td class="label">District</td><td>${data.district || 'Data not found'}</td></tr>
-          <tr><td class="label">Max Height</td><td>${data.max_height || 'N/A'}</td></tr>
-          <tr><td class="label">Parking</td><td>${data.parking_exemptions || 'N/A'}</td></tr>
-      `;
-      document.getElementById('ibcTable').innerHTML = `
-          <tr><td class="label">Occupancy</td><td>${data.ibc_occupancy || 'N/A'}</td></tr>
-          <tr><td class="label">Strategic Play</td><td>${data.strategic_play || 'N/A'}</td></tr>
-      `;
-
-      btn.innerText = "FRAME PROJECT";
-      btn.disabled = false;
-      window.scrollTo(0,0);
-    } catch (error) {
-      console.error(error);
-      alert("Error: Check Vercel Logs.");
-      btn.innerText = "FRAME PROJECT";
-      btn.disabled = false;
-    }
+  function downloadPDF() {
+    const element = document.getElementById('content');
+    const opt = {
+      margin: 1,
+      filename: 'A-Practice-Report.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
   }
 </script>
-</body>
-</html>
+
 
 
 
