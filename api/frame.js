@@ -6,34 +6,29 @@ export default async function handler(req, res) {
   try {
     const { prompt } = JSON.parse(req.body);
 
-    // 1. Create a Thread (a private conversation for this specific search)
+    // 1. Create a Thread for this unique user session
     const thread = await openai.beta.threads.create();
 
-    // 2. Send the address to the thread
+    // 2. Add the address to the thread
     await openai.beta.threads.messages.create(thread.id, {
       role: "user",
-      content: `Analyze this address using the uploaded zoning PDFs: ${prompt}`
+      content: `Analyze the technical feasibility for: ${prompt}`
     });
 
-    // 3. Run the Assistant (REPLACE 'asst_YOUR_ID' WITH YOUR ACTUAL ID)
+    // 3. Run the Assistant (PASTE YOUR ID FROM THE SCREENSHOT BELOW)
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_YOUR_ID_HERE",
-      instructions: "Return the results as a JSON object with these keys: district, max_height, parking_exemptions, ibc_occupancy, strategic_play. Ensure you cite specific sections from the PDF."
+      assistant_id: "asst_cvTmq7kmfAlV9icLbUJB rxhX", // ID from your screenshot
     });
 
-    // 4. Retrieve the Assistant's expert answer
+    // 4. Get the response from the Assistant
     if (run.status === 'completed') {
       const messages = await openai.beta.threads.messages.list(thread.id);
       const aiResponse = messages.data[0].content[0].text.value;
       
-      // We parse the AI's text back into a format your website's tables can read
-      const cleanJson = JSON.parse(aiResponse.replace(/```json|```/g, ''));
-      res.status(200).json(cleanJson);
-    } else {
-      res.status(500).json({ error: "Assistant timeout" });
+      // Send the professional analysis back to your dashboard
+      res.status(200).json({ analysis: aiResponse });
     }
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: error.message });
   }
 }
