@@ -100,7 +100,6 @@
       });
       const data = await response.json();
 
-      // UI Changes
       document.querySelector('.question').style.display = 'none';
       document.getElementById('modeFeedback').style.display = 'none';
       document.getElementById('footer').style.display = 'none';
@@ -108,15 +107,14 @@
       document.getElementById('pInput').style.height = '60px';
       document.getElementById('pInput').style.fontSize = '0.9rem';
 
-      // Inject AI Data using lowercase keys to match frame.js
       document.getElementById('zoningTable').innerHTML = `
-          <tr><td class="label">District</td><td>${data.district}</td></tr>
-          <tr><td class="label">Max Height</td><td>${data.max_height}</td></tr>
-          <tr><td class="label">Parking</td><td>${data.parking_exemptions}</td></tr>
+          <tr><td class="label">District</td><td>${data.district || 'Data not found'}</td></tr>
+          <tr><td class="label">Max Height</td><td>${data.max_height || 'N/A'}</td></tr>
+          <tr><td class="label">Parking</td><td>${data.parking_exemptions || 'N/A'}</td></tr>
       `;
       document.getElementById('ibcTable').innerHTML = `
-          <tr><td class="label">Occupancy</td><td>${data.ibc_occupancy}</td></tr>
-          <tr><td class="label">Strategic Play</td><td>${data.strategic_play}</td></tr>
+          <tr><td class="label">Occupancy</td><td>${data.ibc_occupancy || 'N/A'}</td></tr>
+          <tr><td class="label">Strategic Play</td><td>${data.strategic_play || 'N/A'}</td></tr>
       `;
 
       btn.innerText = "FRAME PROJECT";
@@ -124,7 +122,7 @@
       window.scrollTo(0,0);
     } catch (error) {
       console.error(error);
-      alert("Error: Check Vercel Logs for API issues.");
+      alert("Error: Check Vercel Logs.");
       btn.innerText = "FRAME PROJECT";
       btn.disabled = false;
     }
@@ -132,6 +130,7 @@
 </script>
 </body>
 </html>
+
 
 
 
