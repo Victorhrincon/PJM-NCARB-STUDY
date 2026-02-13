@@ -6,42 +6,26 @@
 <title>A-Practice | Architectural Intelligence</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-  :root { --bg: #ffffff; --text: #1a1a1a; --subtle: #888; --accent: #0047FF; --border: #eee; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 40px; }
-header { 
-    border-bottom: 2px solid var(--text); 
-    padding-bottom: 10px; 
-    margin-bottom: 30px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: flex-end; 
-  }
-  header h1 { 
-    font-size: 1.5rem; 
-    margin: 0; 
-    text-transform: uppercase; 
-  }
+  :root { --bg: #f4f4f4; --text: #1a1a1a; --subtle: #888; --accent: #0047FF; --border: #D1D1D1; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+  
+  /* The "Paper" Sheet Layout */
   .sheet { 
-    background: white; 
-    max-width: 850px; 
-    margin: 0 auto; 
-    padding: 50px; 
-    box-shadow: 0 0 20px rgba(0,0,0,0.05); 
-    min-height: 100vh; 
-    box-sizing: border-box; 
-    border: 1px solid var(--border); 
+    background: white; max-width: 850px; margin: 0 auto; padding: 50px; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.05); min-height: 100vh; 
+    box-sizing: border-box; border: 1px solid var(--border); 
   }
 
-<div class="action-btns">
-  <button id="frameBtn" onclick="frame()">Execute Scan</button>
-  <button id="pdfBtn" onclick="downloadPDF()">Export Technical Summary (PDF)</button>
-</div>
-  
-  /* Minimalist Input */
-  textarea { width: 100%; height: 80px; border: none; border-bottom: 1px solid var(--border); font-size: 1.1rem; color: var(--text); padding: 10px 0; outline: none; transition: 0.3s; }
+  header { 
+    border-bottom: 2px solid var(--text); padding-bottom: 10px; 
+    margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; 
+  }
+  header h1 { font-size: 1.5rem; margin: 0; text-transform: uppercase; letter-spacing: -0.5px; }
+  .version { font-size: 0.7rem; color: var(--accent); font-weight: bold; }
+
+  textarea { width: 100%; height: 80px; border: none; border-bottom: 1px solid var(--border); font-size: 1.1rem; color: var(--text); padding: 10px 0; outline: none; transition: 0.3s; background: transparent; }
   textarea:focus { border-bottom: 1px solid var(--text); }
 
-  /* Consistent, Elegant Buttons */
   .action-btns { margin: 30px 0; display: flex; flex-direction: column; gap: 12px; }
   button { 
     width: 100%; padding: 14px; border-radius: 2px; font-weight: 500; 
@@ -52,50 +36,52 @@ header {
   #frameBtn.ready { opacity: 1; background: var(--text); color: white; }
   #pdfBtn { background: transparent; color: var(--accent); border-color: var(--accent); display: none; }
 
-  /* Results Section */
   #resultsArea { display: none; margin-top: 40px; border-top: 1px solid var(--text); padding-top: 30px; }
   .data-card { margin-bottom: 30px; }
   .data-card h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--subtle); margin-bottom: 15px; }
   .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
   .data-table tr { border-bottom: 1px solid #f9f9f9; }
   .data-table td { padding: 12px 0; vertical-align: top; line-height: 1.5; }
-  .label { color: var(--subtle); width: 30%; text-transform: uppercase; font-size: 0.65rem; padding-top: 14px; }
+  .label { color: var(--subtle); width: 30%; text-transform: uppercase; font-size: 0.65rem; padding-top: 4px; font-weight: bold; }
   
   .modes { display: flex; gap: 20px; margin-top: 10px; }
-  .mode-btn { border: none; background: none; color: #ccc; padding: 0; width: auto; font-size: 0.7rem; }
+  .mode-btn { border: none; background: none; color: #ccc; padding: 0; width: auto; font-size: 0.7rem; cursor: pointer; }
   .mode-btn.active { color: var(--text); text-decoration: underline; }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>A-Practice</h1>
-</header>
+<div class="sheet" id="content">
+  <header>
+    <h1>A-Practice // Analysis</h1>
+    <div class="version">V1.04 PROFESSIONAL TIER</div>
+  </header>
 
-<main id="content">
-  <textarea id="pInput" placeholder="Enter address or project genesis..." oninput="monitor()"></textarea>
-  
-  <div class="modes">
-    <button class="mode-btn" onclick="sm('residential', this)">Residential</button>
-    <button class="mode-btn active" onclick="sm('commercial', this)">Commercial</button>
-  </div>
-
-  <div class="action-btns">
-    <button id="frameBtn" onclick="frame()">Frame Project</button>
-    <button id="pdfBtn" onclick="downloadPDF()">Export NCARB Summary</button>
-  </div>
-
-  <div id="resultsArea">
-    <div class="data-card">
-        <h3>Zoning & Feasibility</h3>
-        <table class="data-table" id="zoningTable"></table>
+  <main>
+    <textarea id="pInput" placeholder="Enter address or project genesis..." oninput="monitor()"></textarea>
+    
+    <div class="modes">
+      <button class="mode-btn" onclick="sm('residential', this)">Residential</button>
+      <button class="mode-btn active" onclick="sm('commercial', this)">Commercial</button>
     </div>
-    <div class="data-card">
-        <h3>IBC & Life Safety</h3>
-        <table class="data-table" id="ibcTable"></table>
+
+    <div class="action-btns">
+      <button id="frameBtn" onclick="frame()">Execute Scan</button>
+      <button id="pdfBtn" onclick="downloadPDF()">Export Technical Summary (PDF)</button>
     </div>
-  </div>
-</main>
+
+    <div id="resultsArea">
+      <div class="data-card">
+          <h3>Zoning & Feasibility</h3>
+          <table class="data-table" id="zoningTable"></table>
+      </div>
+      <div class="data-card">
+          <h3>IBC & Life Safety</h3>
+          <table class="data-table" id="ibcTable"></table>
+      </div>
+    </div>
+  </main>
+</div>
 
 <script>
   let m = 'commercial';
@@ -107,7 +93,8 @@ header {
 
   function monitor() {
     const btn = document.getElementById('frameBtn');
-    if(document.getElementById('pInput').value.length > 5) {
+    const val = document.getElementById('pInput').value;
+    if(val.length > 5) {
       btn.classList.add('ready');
     } else {
       btn.classList.remove('ready');
@@ -119,7 +106,7 @@ header {
     const btn = document.getElementById('frameBtn');
     if(input.length < 5) return;
 
-    btn.innerText = "Processing...";
+    btn.innerText = "Processing Scan...";
     btn.disabled = true;
 
     try {
@@ -142,11 +129,11 @@ header {
           <tr><td class="label">Strategy</td><td>${data.strategic_play || 'N/A'}</td></tr>
       `;
 
-      btn.innerText = "New Frame";
+      btn.innerText = "New Scan";
       btn.disabled = false;
     } catch (error) {
       alert("System Timeout. Try again.");
-      btn.innerText = "Frame Project";
+      btn.innerText = "Execute Scan";
       btn.disabled = false;
     }
   }
@@ -155,7 +142,9 @@ header {
     const element = document.getElementById('content');
     const opt = {
       margin: 0.5,
-      filename: 'APractice-Analysis.pdf',
+      filename: 'APractice-Technical-Report.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
       jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(element).save();
@@ -163,6 +152,7 @@ header {
 </script>
 </body>
 </html>
+
 
 
 
