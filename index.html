@@ -1,37 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>A-Practice | Architectural Intelligence</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <style>
-  /* ... existing styles ... */
-  .button-row { display: flex; gap: 10px; margin-top: 20px; }
-  #frameBtn { 
-    position: relative; bottom: auto; right: auto; /* Moves it from the corner */
-    display: block; width: 100%; background: var(--text); color: white; 
-    padding: 15px; border-radius: 4px; font-weight: 600; cursor: pointer;
-  }
-  #pdfBtn { 
-    display: none; width: 100%; background: var(--accent); color: white; 
-    padding: 15px; border: none; border-radius: 4px; font-weight: 600; 
-    cursor: pointer; margin-top: 10px;
-  }
-</style>
+  :root { --bg: #ffffff; --text: #1a1a1a; --subtle: #888; --accent: #0047FF; --border: #eee; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; height: 100vh; }
+  header { padding: 40px 20px 10px; text-align: left; max-width: 800px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+  header h1 { font-weight: 500; letter-spacing: -0.5px; font-size: 1.5rem; margin: 0; }
+  header p { font-size: 0.8rem; color: var(--subtle); margin-top: 4px; }
+  main { flex: 1; display: flex; flex-direction: column; padding: 20px; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box; overflow-y: auto; }
+  .question { font-size: 1.4rem; font-weight: 400; margin-bottom: 20px; line-height: 1.3; }
+  textarea { width: 100%; height: 100px; border: 1px solid #eee; border-radius: 8px; font-size: 1rem; color: var(--text); padding: 12px; box-sizing: border-box; resize: none; margin-bottom: 15px; }
+  
+  /* Mobile-Friendly Buttons */
+  .action-btns { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+  button { width: 100%; padding: 16px; border-radius: 8px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-size: 0.85rem; }
+  #frameBtn { background: var(--text); color: white; }
+  #pdfBtn { background: var(--accent); color: white; display: none; }
 
-<button id="frameBtn" onclick="frame()">Frame Project</button>
-  <button id="pdfBtn" onclick="downloadPDF()">Save as NCARB Report (PDF)</button>
+  #resultsArea { display: none; border-top: 2px solid #000; padding-top: 30px; margin-top: 10px; }
+  .data-card { margin-bottom: 30px; }
+  .data-card h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 10px; }
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .data-table tr { border-bottom: 1px solid #eee; }
+  .data-table td { padding: 12px 0; vertical-align: top; }
+  .label { color: var(--subtle); width: 35%; font-weight: 500; }
+  
+  .modes { display: flex; gap: 20px; margin-bottom: 20px; }
+  .mode-btn { background: none; border: 1px solid #eee; color: #999; padding: 8px 12px; border-radius: 4px; font-size: 0.7rem; }
+  .mode-btn.active { color: var(--text); border-color: var(--text); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>A-Practice</h1>
+  <p>Leadership-level project framing</p>
+</header>
+
+<main id="content">
+  <div class="question" id="qText">What are you trying to understand?</div>
+  <textarea id="pInput" placeholder="Address or project genesis..." oninput="monitor()"></textarea>
+  
+  <div class="modes" id="modeSelectors">
+    <button class="mode-btn" onclick="sm('residential', this)">Residential</button>
+    <button class="mode-btn active" onclick="sm('commercial', this)">Commercial</button>
+  </div>
+
+  <div class="action-btns">
+    <button id="frameBtn" onclick="frame()">Frame Project</button>
+    <button id="pdfBtn" onclick="downloadPDF()">Download NCARB Report</button>
+  </div>
+
+  <div id="resultsArea">
+    <div class="data-card">
+        <h3>Zoning & Feasibility</h3>
+        <table class="data-table" id="zoningTable"></table>
+    </div>
+    <div class="data-card">
+        <h3>IBC & Life Safety</h3>
+        <table class="data-table" id="ibcTable"></table>
+    </div>
+  </div>
 </main>
 
 <script>
-  // ... existing functions (sm, monitor) ...
+  let m = 'commercial';
+  function sm(mode, btn) {
+    m = mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function monitor() {
+    const btn = document.getElementById('frameBtn');
+    btn.style.opacity = document.getElementById('pInput').value.length > 3 ? '1' : '0.5';
+  }
 
   async function frame() {
-    // ... keep your existing frame() logic ...
-    // Add this line at the end of the 'try' block:
-    document.getElementById('pdfBtn').style.display = 'block'; 
+    const input = document.getElementById('pInput').value;
+    const btn = document.getElementById('frameBtn');
+    if(input.length < 3) return;
+
+    btn.innerText = "ANALYZING...";
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('/api/frame', {
+        method: 'POST',
+        body: JSON.stringify({ prompt: input, mode: m })
+      });
+      const data = await response.json();
+
+      document.getElementById('resultsArea').style.display = 'block';
+      document.getElementById('pdfBtn').style.display = 'block';
+
+      document.getElementById('zoningTable').innerHTML = `
+          <tr><td class="label">District</td><td>${data.district || 'N/A'}</td></tr>
+          <tr><td class="label">Max Height</td><td>${data.max_height || 'N/A'}</td></tr>
+          <tr><td class="label">Parking</td><td>${data.parking_exemptions || 'N/A'}</td></tr>
+      `;
+      document.getElementById('ibcTable').innerHTML = `
+          <tr><td class="label">Occupancy</td><td>${data.ibc_occupancy || 'N/A'}</td></tr>
+          <tr><td class="label">Strategy</td><td>${data.strategic_play || 'N/A'}</td></tr>
+      `;
+
+      btn.innerText = "NEW ANALYSIS";
+      btn.disabled = false;
+    } catch (error) {
+      alert("Error. Check connection.");
+      btn.innerText = "FRAME PROJECT";
+      btn.disabled = false;
+    }
   }
 
   function downloadPDF() {
     const element = document.getElementById('content');
     const opt = {
-      margin: 1,
+      margin: 0.5,
       filename: 'A-Practice-Report.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2 },
@@ -40,6 +129,9 @@
     html2pdf().set(opt).from(element).save();
   }
 </script>
+</body>
+</html>
+
 
 
 
