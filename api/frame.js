@@ -2,9 +2,9 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export default async function handler(req, res) {
-  // 1. Tell Vercel to allow more time (Up to 60s on Hobby plan)
-  export const config = { maxDuration: 60 }; 
+export const config = {
+  maxDuration: 60, // Sets the timeout to 60 seconds (max for Hobby plan)
+};
 
   try {
     const { prompt } = JSON.parse(req.body);
