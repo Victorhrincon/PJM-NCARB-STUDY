@@ -42,35 +42,49 @@
     </div>
   </main>
 </div>
+
 <script>
   function monitor() {
     const btn = document.getElementById('frameBtn');
     if(document.getElementById('pInput').value.length > 5) { btn.classList.add('ready'); } 
     else { btn.classList.remove('ready'); }
   }
+
   async function frame() {
     const input = document.getElementById('pInput').value;
     const btn = document.getElementById('frameBtn');
     if(input.length < 5) return;
-    btn.innerText = "Analyzing PDFs...";
+
+    btn.innerText = "Analyzing PDFs..."; 
     btn.disabled = true;
+
     try {
       const response = await fetch('/api/frame', {
         method: 'POST',
         body: JSON.stringify({ prompt: input })
       });
+      
       const data = await response.json();
-      document.getElementById('resultsArea').style.display = 'block';
-      document.getElementById('pdfBtn').style.display = 'block';
-      document.getElementById('pro-analysis').innerText = data.analysis;
+
+      if (data && data.analysis) {
+        document.getElementById('resultsArea').style.display = 'block';
+        document.getElementById('pdfBtn').style.display = 'block';
+        document.getElementById('pro-analysis').innerText = data.analysis;
+      } else {
+        document.getElementById('resultsArea').style.display = 'block';
+        document.getElementById('pro-analysis').innerText = "Analysis incomplete. " + (data.error || "Check PDF uploads.");
+      }
+
       btn.innerText = "New Scan";
       btn.disabled = false;
     } catch (error) {
-      alert("Scan failed. Check OpenAI status.");
+      console.error("Fetch error:", error);
+      alert("Scan failed. Ensure API is active.");
       btn.innerText = "Execute Scan";
       btn.disabled = false;
     }
   }
+
   function downloadPDF() {
     const element = document.getElementById('content');
     html2pdf().from(element).save('Technical-Report.pdf');
@@ -78,6 +92,7 @@
 </script>
 </body>
 </html>
+
 
 
 
