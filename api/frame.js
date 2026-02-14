@@ -4,7 +4,8 @@ export const config = { maxDuration: 60 };
 
 const openai = new OpenAI({ 
   apiKey: process.env.OPENAI_API_KEY 
-  // REMOVED the project line that caused the 401 error
+  // DO NOT add the 'project:' line here anymore. 
+  // The new key you just made will find it automatically.
 });
 
 export default async function handler(req, res) {
