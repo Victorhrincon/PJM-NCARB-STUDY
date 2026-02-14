@@ -17,14 +17,14 @@ export default async function handler(req, res) {
     });
 
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_BEc7djwKX1y6wrXt2GsjtFKh", // Your Correct Assistant ID
+      assistant_id: "asst_BEc7djwKX1y6wrXt2GsjtFKh", 
     });
 
     if (run.status === 'completed') {
       const messages = await openai.beta.threads.messages.list(thread.id);
       let rawText = messages.data[0].content[0].text.value;
 
-      // This cleans the text by removing markers like 【4:0†source】
+      // Removes markers like 【4:0†source】
       const cleanedText = rawText.replace(/【\d+(?::\d+)?†source】/g, "");
 
       res.status(200).json({ analysis: cleanedText });
