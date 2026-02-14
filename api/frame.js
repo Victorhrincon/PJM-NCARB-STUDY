@@ -4,8 +4,6 @@ export const config = { maxDuration: 60 };
 
 const openai = new OpenAI({ 
   apiKey: process.env.OPENAI_API_KEY 
-  // DO NOT add the 'project:' line here anymore. 
-  // The new key you just made will find it automatically.
 });
 
 export default async function handler(req, res) {
@@ -19,12 +17,17 @@ export default async function handler(req, res) {
     });
 
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_BEc7djwKX1y6wrXt2GsjtFKh", // Your Assistant ID
+      assistant_id: "asst_BEc7djwKX1y6wrXt2GsjtFKh", // Your Correct Assistant ID
     });
 
     if (run.status === 'completed') {
       const messages = await openai.beta.threads.messages.list(thread.id);
-      res.status(200).json({ analysis: messages.data[0].content[0].text.value });
+      let rawText = messages.data[0].content[0].text.value;
+
+      // This cleans the text by removing markers like 【4:0†source】
+      const cleanedText = rawText.replace(/【\d+(?::\d+)?†source】/g, "");
+
+      res.status(200).json({ analysis: cleanedText });
     } else {
       res.status(500).json({ error: "Run failed: " + run.status });
     }
