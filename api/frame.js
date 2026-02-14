@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
     // 3. Run the Assistant (using your specific ID from the screenshot)
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_cvTmq7kmfAlV9icLbUJBrxhX", 
+      assistant_id: "asst_cvTmq7kmfAlV9icLbUJbrxhX", 
     });
 
     // 4. Get the response
