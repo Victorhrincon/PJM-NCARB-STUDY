@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     });
 
     const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: "asst_cvTmq7kmfAlV9icLbUJBrxhX", // Your Assistant ID
+      assistant_id: "asst_BEc7djwKX1y6wrXt2GsjtFKh", // Your Assistant ID
     });
 
     if (run.status === 'completed') {
